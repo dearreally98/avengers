@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class MemorableLines {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memorableNo; // 아이디 번호
+    private Long memoNo; // 아이디 번호
 
     @Column(length = 30, nullable = false)
     private String nickname; // 닉네임
