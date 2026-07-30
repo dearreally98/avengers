@@ -1,42 +1,48 @@
 package com.team.project.avengers.dto;
 
-
 import com.team.project.avengers.entity.RecommendMovie;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Service;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class RecommendMovieDTO {
-    private Long movieNo;
-    private String movieName;
-    private String movieCast;
-    private String postUrl;
-    private String movieContent;
+    private Long movieNo; //영화 제목
+    private String movieName; //영화이름
+    private String movieCast; //여기에 감독이름
+    private String postUrl; // 이미지를 넣을 필드명
+    private String movieContent; // 이건 디테일에서 쓸 영화 소개
 
     private MultipartFile uploadFile;
     private String savedFilename;
-    private String OriginFilename;
+    private String originFilename;
 
+    // DTO -> Entity
     public RecommendMovie toEntity() {
-        return new RecommendMovie(movieName, movieCast, postUrl, movieContent);
+        return RecommendMovie.builder()
+                .movieNo(this.movieNo)
+                .movieName(this.movieName)
+                .movieCast(this.movieCast)
+                .postUrl(this.postUrl)
+                .movieContent(this.movieContent)
+                .saveFilename(this.savedFilename)
+                .originFilename(this.originFilename)
+                .build();
     }
 
+    // Entity -> DTO
     public static RecommendMovieDTO fromEntity(RecommendMovie recommendMovie) {
-        RecommendMovieDTO recommendMovieDTO = new RecommendMovieDTO();
-        recommendMovieDTO.setMovieNo(recommendMovie.getMovieNo());
-        recommendMovieDTO.setMovieName(recommendMovieDTO.getMovieName());
-        recommendMovieDTO.setMovieCast(recommendMovie.getMovieCast());
-        recommendMovieDTO.setPostUrl(recommendMovie.getPostUrl());
-        recommendMovieDTO.setMovieContent(recommendMovie.getMovieContent());
-        recommendMovieDTO.setSavedFilename(recommendMovie.getSaveFilename());
-        recommendMovieDTO.setOriginFilename(recommendMovie.getOriginFilename());
-
-        return recommendMovieDTO;
+        return RecommendMovieDTO.builder()
+                .movieNo(recommendMovie.getMovieNo())
+                .movieName(recommendMovie.getMovieName()) // 오타 수정완료
+                .movieCast(recommendMovie.getMovieCast())
+                .postUrl(recommendMovie.getPostUrl())
+                .movieContent(recommendMovie.getMovieContent())
+                .savedFilename(recommendMovie.getSaveFilename())
+                .originFilename(recommendMovie.getOriginFilename())
+                .build();
     }
-
 }
