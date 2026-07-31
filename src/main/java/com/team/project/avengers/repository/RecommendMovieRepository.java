@@ -12,8 +12,4 @@ public interface RecommendMovieRepository extends JpaRepository<RecommendMovie, 
     // 출연진/감독 검색
     Page<RecommendMovie> findByMovieCastContaining(String keyword, Pageable pageable);
 
-    // 제목 또는 출연진/감독 검색
-    Page<RecommendMovie> findByMovieNameContainingOrMovieCastContaining(String movieName, String MovieCast, Pageable pageable);
-
-    //
 }

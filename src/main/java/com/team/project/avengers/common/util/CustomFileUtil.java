@@ -62,9 +62,9 @@ public class CustomFileUtil {
         }
 
         String clearFilename = Paths.get(originalFilename).getFileName().toString();
-        String savedName = UUID.randomUUID() + "_" + clearFilename;
+        String saveName = UUID.randomUUID() + "_" + clearFilename;
 
-        Path savePath = uploadPath.resolve(savedName).normalize();
+        Path savePath = uploadPath.resolve(saveName).normalize();
         if(!savePath.startsWith(uploadPath)) {
             throw new FileUploadException("올바르지 않은 파일 저장 경로입니다.");
         }
@@ -75,7 +75,7 @@ public class CustomFileUtil {
             String contentType = file.getContentType();
 
             if(contentType != null && contentType.startsWith("image/")) {
-                thumnailPath = uploadPath.resolve("s_" + savedName).normalize();
+                thumnailPath = uploadPath.resolve("s_" + saveName).normalize();
 
                 Thumbnails.of(savePath.toFile())
                         .size(200, 133)
@@ -83,8 +83,8 @@ public class CustomFileUtil {
 
             }
 
-            log.info("파일 저장 완료 - 원본 파일명: {}, 저장 파일명: {}", originalFilename, savedName);
-            return savedName;
+            log.info("파일 저장 완료 - 원본 파일명: {}, 저장 파일명: {}", originalFilename, saveName);
+            return saveName;
         } catch (IOException io) {
             throw new FileUploadException("파일을 저장하는 중 오류가 발생했습니다.", io);
         }

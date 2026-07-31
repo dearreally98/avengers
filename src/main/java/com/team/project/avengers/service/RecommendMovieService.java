@@ -10,5 +10,5 @@ public interface RecommendMovieService {
     List<RecommendMovieDTO> movieList();
     PageResponseDTO<RecommendMovieDTO> movieList(PageRequestDTO pageRequestDTO);
 
-    RecommendMovieDTO getRecommendMovieDetail(Long movieNo);
+    RecommendMovieDTO RecommendMovieDetail(Long movieNo);
 }

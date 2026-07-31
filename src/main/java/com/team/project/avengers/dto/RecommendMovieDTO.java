@@ -22,7 +22,7 @@ public class RecommendMovieDTO {
     private LocalDate releaseDate; // 영화 개봉일
 
     private MultipartFile uploadFile;
-    private String savedFilename;
+    private String saveFilename;
     private String originFilename;
 
     // DTO -> Entity
@@ -32,7 +32,7 @@ public class RecommendMovieDTO {
                 movieCast,
                 movieContent,
                 releaseDate,
-                savedFilename,
+                saveFilename,
                 originFilename);
 
     }
@@ -45,7 +45,7 @@ public class RecommendMovieDTO {
                 .movieCast(recommendMovie.getMovieCast())
                 .releaseDate(recommendMovie.getReleaseDate())
                 .movieContent(recommendMovie.getMovieContent())
-                .savedFilename(recommendMovie.getSaveFilename())
+                .saveFilename(recommendMovie.getSaveFilename())
                 .originFilename(recommendMovie.getOriginFilename())
                 .build();
     }

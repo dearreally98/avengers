@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/avengers/recommend")
+@RequestMapping("/avengers")
 @RequiredArgsConstructor
 public class RecommendMovieController {
 
     private final RecommendMovieService recommendMovieService;
 
     // 1. 추천 영화 목록 조회 (templates/avengers/recommendList.html)
-    @GetMapping("/list")
-    public String getList(PageRequestDTO pageRequestDTO, Model model) {
-        PageResponseDTO<RecommendMovieDTO> responseDTO = recommendMovieService.MovieList(pageRequestDTO);
-        model.addAttribute("responseDTO", responseDTO);
+    @GetMapping("/recommendlist")
+    public String movieList(PageRequestDTO pageRequestDTO, Model model) {
+        PageResponseDTO<RecommendMovieDTO> pageResponseDTO = recommendMovieService.movieList(pageRequestDTO);
+        model.addAttribute("pageResponse", pageResponseDTO);
         return "avengers/recommendList";
     }
 
     // 2. 추천 영화 상세 조회 (templates/avengers/recommendDetail.html)
     @GetMapping("/detail/{movieNo}")
     public String getDetail(@PathVariable("movieNo") Long movieNo, PageRequestDTO pageRequestDTO, Model model) {
-        RecommendMovieDTO movieDTO = recommendMovieService.getRecommendMovieDetail(movieNo);
+        RecommendMovieDTO movieDTO = recommendMovieService.RecommendMovieDetail(movieNo);
         model.addAttribute("movie", movieDTO);
         model.addAttribute("pageRequestDTO", pageRequestDTO);
         return "avengers/recommendDetail";

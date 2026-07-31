@@ -7,43 +7,43 @@
     <title th:text="${movie.movieName} + ' - 상세정보'">추천 영화 상세</title>
 </head>
 <body>
-<div layout:fragment="content" class="container my-5">
-    <div class="card shadow border-0 overflow-hidden">
-        <div class="row g-0">
-            <!-- 포스터 이미지 영역 -->
-            <div class="col-md-4 bg-dark text-center">
-                <img th:src="${movie.savedFilename != null ? '/upload/' + movie.savedFilename : (movie.postUrl != null ? movie.postUrl : '/image/어벤져스.jpg')}"
-                     class="img-fluid rounded-start h-100 w-100" alt="포스터" style="object-fit: cover; min-height: 400px;">
-            </div>
+    <div layout:fragment="content" class="container my-5">
+        <div class="card shadow border-0 overflow-hidden">
+            <div class="row g-0">
+                <!-- 포스터 이미지 영역 -->
+                <div class="col-md-4 bg-dark text-center">
+                    <img th:src="${movie.savedFilename != null ? '/upload/' + movie.savedFilename : (movie.postUrl != null ? movie.postUrl : '/image/어벤져스.jpg')}"
+                         class="img-fluid rounded-start h-100 w-100" alt="포스터" style="object-fit: cover; min-height: 400px;">
+                </div>
 
-            <!-- 상세 설명 영역 -->
-            <div class="col-md-8">
-                <div class="card-body p-4 d-flex flex-column justify-content-between h-100">
-                    <div>
-                        <h2 class="card-title fw-bold mb-3" th:text="${movie.movieName}">영화 제목</h2>
+                <!-- 상세 설명 영역 -->
+                <div class="col-md-8">
+                    <div class="card-body p-4 d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <h2 class="card-title fw-bold mb-3" th:text="${movie.movieName}">영화 제목</h2>
 
-                        <div class="mb-3">
-                            <strong class="text-secondary">🎬 감독 및 출연진</strong>
-                            <p class="fs-5 text-dark mt-1" th:text="${movie.movieCast}">감독 및 출연진</p>
+                            <div class="mb-3">
+                                <strong class="text-secondary">🎬 감독 및 출연진</strong>
+                                <p class="fs-5 text-dark mt-1" th:text="${movie.movieCast}">감독 및 출연진</p>
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <strong class="text-secondary">📝 줄거리</strong>
+                                <p class="card-text mt-2" th:text="${movie.movieContent}" style="line-height: 1.8; white-space: pre-line;">영화 줄거리</p>
+                            </div>
                         </div>
 
-                        <hr>
-
-                        <div class="mb-3">
-                            <strong class="text-secondary">📝 줄거리</strong>
-                            <p class="card-text mt-2" th:text="${movie.movieContent}" style="line-height: 1.8; white-space: pre-line;">영화 줄거리</p>
+                        <!-- 목록으로 돌아가기 (수정 완료) -->
+                        <div class="mt-4 pt-3 border-top">
+                            <a th:href=@{/avengers/detail/{movieNo}(movieNo=${movie.movieNo})}">
+                               class="btn btn-secondary">← 목록으로</a>
                         </div>
-                    </div>
-
-                    <!-- 목록으로 돌아가기 -->
-                    <div class="mt-4 pt-3 border-top">
-                        <a th:href="@{/avengers/recommend/list(page=${pageRequestDTO.page}, searchType=${pageRequestDTO.searchType}, keyword=${pageRequestDTO.keyword})}"
-                           class="btn btn-secondary">← 목록으로</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
