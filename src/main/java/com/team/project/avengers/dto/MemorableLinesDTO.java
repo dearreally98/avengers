@@ -3,6 +3,8 @@ package com.team.project.avengers.dto;
 import com.team.project.avengers.entity.MemorableLines;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -13,7 +15,7 @@ public class MemorableLinesDTO {
     private Long memorableNo;
     private String memorableActorName;
     private String memorableContent;
-    private String memorableCreateTime;
+    private LocalDateTime memorableCreateTime;
     private int memorableGood;
     private String memorableNickname;
     private String memorablePassword;
@@ -28,6 +30,11 @@ public class MemorableLinesDTO {
         memorableLinesDTO.setMemorableNo(memorableLines.getMemoNo());
         memorableLinesDTO.setMemorableActorName(memorableLines.getActorName());
         memorableLinesDTO.setMemorableNickname(memorableLines.getNickname());
+        memorableLinesDTO.setMemorableContent(memorableLines.getContent());
+        memorableLinesDTO.setMemorableCreateTime(memorableLines.getCreateTime());
+        memorableLinesDTO.setMemorableGood(memorableLines.getGood());
+        memorableLinesDTO.setMemorablePassword(memorableLines.getPassword());
+        memorableLinesDTO.setMemorableTitle(memorableLines.getTitle());
 
         return memorableLinesDTO;
     }
