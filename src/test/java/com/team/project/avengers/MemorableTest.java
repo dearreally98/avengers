@@ -30,9 +30,10 @@ public class MemorableTest {
     @Test
     @Commit
     public void memorableInsertTest() {
-        memorableLinesRepository.save(new MemorableLines("sfjal", "브루스 배너", "신이 약골이군", "로키 내팽겨치기", "1234"));
-        memorableLinesRepository.save(new MemorableLines("fflsd", "로버트 다우니 주니어", "던~ 던던던~", "캬 심금을 울린다", "5534"));
-        memorableLinesRepository.save(new MemorableLines("ljkw", "로버트 다우니 주니어", "자, 가지! 레골라스", "호크아이한테 한 말", "4563"));
+        memorableLinesRepository.save(new MemorableLines("jljl", "아이언맨", "로버트 다우니 주니어",
+                "I am Irom man", "마블의 시작...", "2646"));
+        memorableLinesRepository.save(new MemorableLines("dsfaf", "캡틴 아메리카", "크리스 에반스",
+                "Avengers, assemble", "캬!!!", "1313"));
     }
 
 
