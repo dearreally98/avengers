@@ -19,4 +19,10 @@ public class MemorableServiceImpl implements MemorableService {
 
         return memorableLinesList.stream().map(memorableLines -> MemorableLinesDTO.fromEntity(memorableLines)).toList();
     }
+
+    @Override
+    public void MemorableLinesInsert(MemorableLinesDTO memorableLinesDTO) {
+        MemorableLines memorableLines = memorableLinesDTO.toEntity();
+        memorableLinesRepository.save(memorableLines);
+    }
 }

@@ -34,4 +34,6 @@ public class MemorableTest {
         memorableLinesRepository.save(new MemorableLines("fflsd", "로버트 다우니 주니어", "던~ 던던던~", "캬 심금을 울린다", "5534"));
         memorableLinesRepository.save(new MemorableLines("ljkw", "로버트 다우니 주니어", "자, 가지! 레골라스", "호크아이한테 한 말", "4563"));
     }
+
+
 }

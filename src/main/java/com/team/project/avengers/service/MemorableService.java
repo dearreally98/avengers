@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface MemorableService {
     List<MemorableLinesDTO> memorableLinesList();
+
+    void MemorableLinesInsert(MemorableLinesDTO memorableLinesDTO);
 }

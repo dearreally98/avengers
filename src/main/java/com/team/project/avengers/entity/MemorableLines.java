@@ -18,11 +18,14 @@ public class MemorableLines {
     @Column(name = "MEMORABLE_NO")
     private Long memoNo; // 아이디 번호
 
+    @Column(nullable = false)
+    private String actorName; // 배우 이름
+
     @Column(length = 30, nullable = false)
     private String nickname; // 닉네임
 
     @Column(nullable = false)
-    private String actorName; // 배우 이름
+    private String characterName;
 
     @Column(nullable = false)
     private String title; // 제목
@@ -40,8 +43,9 @@ public class MemorableLines {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createTime; // 작성일
 
-    public MemorableLines(String nickname, String actorName, String title, String content, String password) { // 생성자
+    public MemorableLines(String nickname, String characterName, String actorName, String title, String content, String password) { // 생성자
         this.nickname = nickname;
+        this.characterName = characterName;
         this.actorName = actorName;
         this.title = title;
         this.content = content;

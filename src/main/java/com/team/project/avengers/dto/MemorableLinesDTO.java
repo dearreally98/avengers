@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class MemorableLinesDTO {
     private Long noDTO;
     private String actorNameDTO;
+    private String characterNameDTO;
     private String contentDTO;
     private LocalDateTime createTimeDTO;
     private int goodDTO;
@@ -22,13 +23,14 @@ public class MemorableLinesDTO {
     private String titleDTO;
 
     public MemorableLines toEntity() {
-        return new MemorableLines(nicknameDTO, actorNameDTO, titleDTO, contentDTO, passwordDTO);
+        return new MemorableLines(nicknameDTO, actorNameDTO, characterNameDTO, titleDTO, contentDTO, passwordDTO);
     }
 
     public static MemorableLinesDTO fromEntity(MemorableLines memorableLines) {
         MemorableLinesDTO memorableLinesDTO = new MemorableLinesDTO();
         memorableLinesDTO.setNoDTO(memorableLines.getMemoNo());
         memorableLinesDTO.setActorNameDTO(memorableLines.getActorName());
+        memorableLinesDTO.setCharacterNameDTO(memorableLines.getCharacterName());
         memorableLinesDTO.setNicknameDTO(memorableLines.getNickname());
         memorableLinesDTO.setContentDTO(memorableLines.getContent());
         memorableLinesDTO.setCreateTimeDTO(memorableLines.getCreateTime());
