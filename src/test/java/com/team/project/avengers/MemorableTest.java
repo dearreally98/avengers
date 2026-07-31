@@ -17,7 +17,7 @@ public class MemorableTest {
     private MemorableLinesRepository memorableLinesRepository;
 
     private void printMemorable(MemorableLines memorableLines) {
-        log.info("게시글 번호: {}", memorableLines.getMemorableNo());
+        log.info("게시글 번호: {}", memorableLines.getMemoNo());
         log.info("배우 이름: {}", memorableLines.getActorName());
         log.info("제목: {}", memorableLines.getTitle());
         log.info("내용: {}", memorableLines.getContent());

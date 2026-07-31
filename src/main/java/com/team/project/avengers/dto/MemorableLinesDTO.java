@@ -3,7 +3,6 @@ package com.team.project.avengers.dto;
 import com.team.project.avengers.entity.MemorableLines;
 import lombok.*;
 
-import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyles.title;
 
 @Getter
 @Setter
@@ -26,7 +25,11 @@ public class MemorableLinesDTO {
 
     public static MemorableLinesDTO fromEntity(MemorableLines memorableLines) {
         MemorableLinesDTO memorableLinesDTO = new MemorableLinesDTO();
-        memorableLinesDTO.setMemorableNo();
+        memorableLinesDTO.setMemorableNo(memorableLines.getMemoNo());
+        memorableLinesDTO.setMemorableActorName(memorableLines.getActorName());
+        memorableLinesDTO.setMemorableNickname(memorableLines.getNickname());
+
+        return memorableLinesDTO;
     }
 
 }
