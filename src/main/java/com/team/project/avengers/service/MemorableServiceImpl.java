@@ -14,7 +14,7 @@ public class MemorableServiceImpl implements MemorableService {
     private final MemorableLinesRepository memorableLinesRepository;
 
     @Override
-    public List<MemorableLinesDTO> memorableList() {
+    public List<MemorableLinesDTO> memorableLinesList() {
         List<MemorableLines> memorableLinesList = memorableLinesRepository.findAll();
 
         return memorableLinesList.stream().map(memorableLines -> MemorableLinesDTO.fromEntity(memorableLines)).toList();
