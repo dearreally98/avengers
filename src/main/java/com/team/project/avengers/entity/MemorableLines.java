@@ -18,7 +18,6 @@ public class MemorableLines {
     @Column(name = "MEMORABLE_NO")
     private Long memoNo; // 아이디 번호
 
-
     @Column(length = 30, nullable = false)
     private String nickname; // 닉네임
 
@@ -29,7 +28,7 @@ public class MemorableLines {
     private String title; // 제목
 
     @Lob
-    @Column(nullable = false)
+    @Column
     private String content; // 내용
 
     private int good = 0; // 추천수

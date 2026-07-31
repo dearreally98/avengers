@@ -12,29 +12,29 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 public class MemorableLinesDTO {
-    private Long memorableNo;
-    private String memorableActorName;
-    private String memorableContent;
-    private LocalDateTime memorableCreateTime;
-    private int memorableGood;
-    private String memorableNickname;
-    private String memorablePassword;
-    private String memorableTitle;
+    private Long noDTO;
+    private String actorNameDTO;
+    private String contentDTO;
+    private LocalDateTime createTimeDTO;
+    private int goodDTO;
+    private String nicknameDTO;
+    private String passwordDTO;
+    private String titleDTO;
 
     public MemorableLines toEntity() {
-        return new MemorableLines(memorableNickname, memorableActorName, memorableTitle, memorableContent, memorablePassword);
+        return new MemorableLines(nicknameDTO, actorNameDTO, titleDTO, contentDTO, passwordDTO);
     }
 
     public static MemorableLinesDTO fromEntity(MemorableLines memorableLines) {
         MemorableLinesDTO memorableLinesDTO = new MemorableLinesDTO();
-        memorableLinesDTO.setMemorableNo(memorableLines.getMemoNo());
-        memorableLinesDTO.setMemorableActorName(memorableLines.getActorName());
-        memorableLinesDTO.setMemorableNickname(memorableLines.getNickname());
-        memorableLinesDTO.setMemorableContent(memorableLines.getContent());
-        memorableLinesDTO.setMemorableCreateTime(memorableLines.getCreateTime());
-        memorableLinesDTO.setMemorableGood(memorableLines.getGood());
-        memorableLinesDTO.setMemorablePassword(memorableLines.getPassword());
-        memorableLinesDTO.setMemorableTitle(memorableLines.getTitle());
+        memorableLinesDTO.setNoDTO(memorableLines.getMemoNo());
+        memorableLinesDTO.setActorNameDTO(memorableLines.getActorName());
+        memorableLinesDTO.setNicknameDTO(memorableLines.getNickname());
+        memorableLinesDTO.setContentDTO(memorableLines.getContent());
+        memorableLinesDTO.setCreateTimeDTO(memorableLines.getCreateTime());
+        memorableLinesDTO.setGoodDTO(memorableLines.getGood());
+        memorableLinesDTO.setPasswordDTO(memorableLines.getPassword());
+        memorableLinesDTO.setTitleDTO(memorableLines.getTitle());
 
         return memorableLinesDTO;
     }
