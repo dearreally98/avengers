@@ -56,7 +56,9 @@
             <div class="col" th:each="movie : ${pageResponse.dtoList}">
 
                 <!-- 카드 전체에 상세 페이지 링크 걸기 -->
-                <a th:href="@{/avengers/recommendDetail(movieNo=${movie.movieNo})}" class="text-decoration-none text-dark">
+                <a th:href="@{/avengers/recommendDetail/{movieNo}(movieNo=${movie.movieNo}, page=${pageResponse.pageRequestDTO.page}, searchType=${pageResponse.pageRequestDTO.searchType}, keyword=${pageResponse.pageRequestDTO.keyword})}"
+                            class="text-decoration-none text-dark"
+                            style="text-decoration: none !important;">
                     <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
 
                         <!-- 1. 포스터 이미지 (동적 적용) -->
@@ -83,7 +85,7 @@
                             <p class="card-text fw-bold text-truncate mb-0"
                                th:text="${movie.movieCast}"
                                style="font-size: 0.95rem;">
-                                개봉일
+                                감독
                             </p>
                         </div>
                     </div>

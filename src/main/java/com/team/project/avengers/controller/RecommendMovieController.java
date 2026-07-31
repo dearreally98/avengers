@@ -27,8 +27,8 @@ public class RecommendMovieController {
     }
 
     // 2. 추천 영화 상세 조회 (templates/avengers/recommendDetail.html)
-    @GetMapping("/detail/{movieNo}")
-    public String getDetail(@PathVariable("movieNo") Long movieNo, PageRequestDTO pageRequestDTO, Model model) {
+    @GetMapping("/recommendDetail/{movieNo}")
+    public String recommendDetail(@PathVariable("movieNo") Long movieNo, PageRequestDTO pageRequestDTO, Model model) {
         RecommendMovieDTO movieDTO = recommendMovieService.RecommendMovieDetail(movieNo);
         model.addAttribute("movie", movieDTO);
         model.addAttribute("pageRequestDTO", pageRequestDTO);

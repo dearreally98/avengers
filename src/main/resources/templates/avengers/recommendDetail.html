@@ -1,49 +1,70 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
+
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${movie.movieName} + ' - 상세정보'">추천 영화 상세</title>
+    <title layout:fragment="title" th:text="${movie.movieName} + ' - 상세정보'">추천 영화 상세</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
-    <div layout:fragment="content" class="container my-5">
-        <div class="card shadow border-0 overflow-hidden">
-            <div class="row g-0">
-                <!-- 포스터 이미지 영역 -->
-                <div class="col-md-4 bg-dark text-center">
-                    <img th:src="${movie.savedFilename != null ? '/upload/' + movie.savedFilename : (movie.postUrl != null ? movie.postUrl : '/image/어벤져스.jpg')}"
-                         class="img-fluid rounded-start h-100 w-100" alt="포스터" style="object-fit: cover; min-height: 400px;">
-                </div>
+<section layout:fragment="content" class="container my-5">
+    <div class="card shadow border-0 overflow-hidden">
+        <div class="row g-0">
+            <!-- 1. 포스터 이미지 영역 (목록과 동일한 saveFilename 사용) -->
+            <div class="col-md-4 bg-dark text-center d-flex align-items-center justify-content-center">
+                <img th:src="${movie.saveFilename != null && !#strings.isEmpty(movie.saveFilename)}
+                         ? @{/upload/{file}(file=${movie.saveFilename})}
+                         : '/image/어벤져스.jpg'"
+                     class="img-fluid rounded-start h-100 w-100"
+                     th:alt="${movie.movieName}"
+                     style="object-fit: cover; min-height: 400px; max-height: 550px;">
+            </div>
 
-                <!-- 상세 설명 영역 -->
-                <div class="col-md-8">
-                    <div class="card-body p-4 d-flex flex-column justify-content-between h-100">
-                        <div>
-                            <h2 class="card-title fw-bold mb-3" th:text="${movie.movieName}">영화 제목</h2>
+            <!-- 2. 상세 설명 영역 -->
+            <div class="col-md-8">
+                <div class="card-body p-4 d-flex flex-column justify-content-between h-100">
+                    <div>
+                        <!-- 영화 제목 -->
+                        <h2 class="card-title fw-bold mb-3" th:text="${movie.movieName}">영화 제목</h2>
 
-                            <div class="mb-3">
-                                <strong class="text-secondary">🎬 감독 및 출연진</strong>
-                                <p class="fs-5 text-dark mt-1" th:text="${movie.movieCast}">감독 및 출연진</p>
-                            </div>
-
-                            <hr>
-
-                            <div class="mb-3">
-                                <strong class="text-secondary">📝 줄거리</strong>
-                                <p class="card-text mt-2" th:text="${movie.movieContent}" style="line-height: 1.8; white-space: pre-line;">영화 줄거리</p>
-                            </div>
+                        <!-- 개봉일 -->
+                        <div class="mb-3" th:if="${movie.releaseDate != null}">
+                            <strong class="text-secondary">📅 개봉일</strong>
+                            <p class="fs-6 text-dark mt-1 mb-0" th:text="${movie.releaseDate}">2026-00-00</p>
                         </div>
 
-                        <!-- 목록으로 돌아가기 (수정 완료) -->
-                        <div class="mt-4 pt-3 border-top">
-                            <a th:href=@{/avengers/detail/{movieNo}(movieNo=${movie.movieNo})}">
-                               class="btn btn-secondary">← 목록으로</a>
+                        <!-- 감독 및 출연진 -->
+                        <div class="mb-3">
+                            <strong class="text-secondary">🎬 감독 및 출연진</strong>
+                            <p class="fs-5 text-dark mt-1 mb-0" th:text="${movie.movieCast}">감독 및 출연진</p>
                         </div>
+
+                        <hr>
+
+                        <!-- 줄거리 -->
+                        <div class="mb-3">
+                            <strong class="text-secondary">📝 줄거리</strong>
+                            <p class="card-text mt-2 text-secondary"
+                               th:text="${movie.movieContent != null ? movie.movieContent : '등록된 줄거리가 없습니다.'}"
+                               style="line-height: 1.8; white-space: pre-line;">
+                                영화 줄거리
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3. 목록으로 돌아가기 (검색어, 페이지 번호 유지를 위한 올바른 th:href 구문) -->
+                    <div class="mt-4 pt-3 border-top">
+                        <a th:href="@{/avengers/recommendlist(page=${pageRequestDTO != null ? pageRequestDTO.page : 1}, searchType=${pageRequestDTO != null ? pageRequestDTO.searchType : ''}, keyword=${pageRequestDTO != null ? pageRequestDTO.keyword : ''})}"
+                           class="btn btn-secondary">
+                            ← 목록으로
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 </body>
 </html>
