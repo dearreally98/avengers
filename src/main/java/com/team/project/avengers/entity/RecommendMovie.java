@@ -3,6 +3,8 @@ package com.team.project.avengers.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,30 +24,29 @@ public class RecommendMovie {
     @Column(nullable = false)
     private String movieCast; // 배우, 감독
 
-    @Column(length = 500)
-    private String postUrl; // 포스터 URL 또는 경로
-
     @Lob
     @Column(nullable = false)
     private String movieContent; // 영화 줄거리
+
+    @Column
+    private LocalDate releaseDate; // 영화 개봉일
 
     private String saveFilename;
     private String originFilename;
 
     // 편의 생성자
-    public RecommendMovie(String movieName, String movieCast, String postUrl, String movieContent, String saveFilename, String originFilename) {
+    public RecommendMovie(String movieName, String movieCast, String movieContent,LocalDate releaseDate, String saveFilename, String originFilename) {
         this.movieName = movieName;
         this.movieCast = movieCast;
-        this.postUrl = postUrl;
         this.movieContent = movieContent;
+        this.releaseDate = releaseDate;
         this.saveFilename = saveFilename;
         this.originFilename = originFilename;
     }
 
-    public void update(String movieCast, String movieContent, String postUrl) {
+    public void update(String movieCast, String movieContent) {
         this.movieCast = movieCast;
         this.movieContent = movieContent;
-        this.postUrl = postUrl;
     }
 
     public void attachfile(String saveFilename, String originFilename) {

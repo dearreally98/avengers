@@ -21,7 +21,7 @@ public class RecommendMovieController {
     // 1. 추천 영화 목록 조회 (templates/avengers/recommendList.html)
     @GetMapping("/list")
     public String getList(PageRequestDTO pageRequestDTO, Model model) {
-        PageResponseDTO<RecommendMovieDTO> responseDTO = recommendMovieService.getRecommendMovieList(pageRequestDTO);
+        PageResponseDTO<RecommendMovieDTO> responseDTO = recommendMovieService.MovieList(pageRequestDTO);
         model.addAttribute("responseDTO", responseDTO);
         return "avengers/recommendList";
     }

@@ -2,7 +2,10 @@ package com.team.project.avengers.dto;
 
 import com.team.project.avengers.entity.RecommendMovie;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,8 +16,10 @@ public class RecommendMovieDTO {
     private Long movieNo; //영화 제목
     private String movieName; //영화이름
     private String movieCast; //여기에 감독이름
-    private String postUrl; // 이미지를 넣을 필드명
     private String movieContent; // 이건 디테일에서 쓸 영화 소개
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate releaseDate; // 영화 개봉일
 
     private MultipartFile uploadFile;
     private String savedFilename;
@@ -22,24 +27,23 @@ public class RecommendMovieDTO {
 
     // DTO -> Entity
     public RecommendMovie toEntity() {
-        return RecommendMovie.builder()
-                .movieNo(this.movieNo)
-                .movieName(this.movieName)
-                .movieCast(this.movieCast)
-                .postUrl(this.postUrl)
-                .movieContent(this.movieContent)
-                .saveFilename(this.savedFilename)
-                .originFilename(this.originFilename)
-                .build();
+        return new RecommendMovie(
+                movieName,
+                movieCast,
+                movieContent,
+                releaseDate,
+                savedFilename,
+                originFilename);
+
     }
 
     // Entity -> DTO
     public static RecommendMovieDTO fromEntity(RecommendMovie recommendMovie) {
         return RecommendMovieDTO.builder()
                 .movieNo(recommendMovie.getMovieNo())
-                .movieName(recommendMovie.getMovieName()) // 오타 수정완료
+                .movieName(recommendMovie.getMovieName())
                 .movieCast(recommendMovie.getMovieCast())
-                .postUrl(recommendMovie.getPostUrl())
+                .releaseDate(recommendMovie.getReleaseDate())
                 .movieContent(recommendMovie.getMovieContent())
                 .savedFilename(recommendMovie.getSaveFilename())
                 .originFilename(recommendMovie.getOriginFilename())

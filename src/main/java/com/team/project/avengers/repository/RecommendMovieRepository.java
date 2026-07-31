@@ -4,16 +4,16 @@ import com.team.project.avengers.entity.RecommendMovie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface RecommendMovieRepository extends JpaRepository<RecommendMovie, Long> {
+    // 영화 제목 이름 검색
+    Page<RecommendMovie> findByMovieNameContaining(String keyword, Pageable pageable);
 
-    @Query("SELECT r FROM RecommendMovie r WHERE " +
-            "(:searchType = 't' AND r.movieName LIKE %:keyword%) OR " +
-            "(:searchType = 'c' AND r.movieCast LIKE %:keyword%) OR " +
-            "((:searchType = '' OR :searchType IS NULL OR (:searchType <> 't' AND :searchType <> 'c')) AND (r.movieName LIKE %:keyword% OR r.movieCast LIKE %:keyword%))")
-    Page<RecommendMovie> searchMovies(@Param("searchType") String searchType,
-                                      @Param("keyword") String keyword,
-                                      Pageable pageable);
+    // 출연진/감독 검색
+    Page<RecommendMovie> findByMovieCastContaining(String keyword, Pageable pageable);
+
+    // 제목 또는 출연진/감독 검색
+    Page<RecommendMovie> findByMovieNameContainingOrMovieCastContaining(String movieName, String MovieCast, Pageable pageable);
+
+    //
 }
