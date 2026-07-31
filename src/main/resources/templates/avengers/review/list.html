@@ -8,4 +8,47 @@
     <title>어벤저스 영화 리뷰 조회 페이지</title>
 </head>
 <body>
+    <th:section layout:fragment="content">
+        <div class="bg-dark text-light p-3 d-flex justify-content-between align-items-center mt-1">
+            <h3>리뷰 게시판</h3>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th scope="col">순번</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">닉네임</th>
+                        <th scope="col">작성일</th>
+                        <th scope="col">조회수</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider border-dark table-white table-hover table-striped">
+                    <tr th:if="${reviewList == null or #lists.isEmpty(reviewList)}">
+                        <td colspan="3" class="text-center">
+                            게시글이 존재하지 않습니다. 새로운 게시물을 올려보세요!
+                        </td>
+                    </tr>
+
+                    <tr th:each="review : ${reviewList}" th:object="${review}" th:data-no="*{reviewNo}">
+                        <td th:text="*{reviewNo}"></td>
+                        <td>
+                            <a class="text-decoration-none text-dark"
+                               th:href="@{/review/{reviewNo}(reviewNo=*{reviewNo})}" th:text="*{reviewTitle}"></a>
+                        </td>
+                        <td th:text="*{reviewName}"></td>
+                        <td th:text="${#temporals.format(review.reviewCreateAt, 'yyyy/MM/dd')}"></td>
+                        <td th:text="*{reviewHit}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="is-flex is-justify-content-flex-end mt-4">
+            <a th:href="@{/review/write}" class="btn btn-outline-secondary">
+                리뷰 작성
+            </a>
+        </div>
+    </th:section>
 </body>
