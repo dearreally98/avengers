@@ -17,7 +17,10 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<ReviewDTO> reviewList() {
-        return reviewRepository.findAll().stream().map(ReviewDTO::fromEntity).toList();
+        return reviewRepository.findAllByOrderByReviewNoDesc()
+                .stream()
+                .map(ReviewDTO::fromEntity)
+                .toList();
     }
 
     @Override
@@ -33,6 +36,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    @Transactional
     public ReviewDTO reviewDetail(Long reviewNo) {
         Review review= getReview(reviewNo);
         review.addHit();
