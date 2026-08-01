@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -24,10 +25,41 @@ public class ReviewController {
         return "avengers/review/list";
     }
 
+    @GetMapping("/write")
+    public String writeForm(Model model){
+        model.addAttribute("review", new ReviewDTO());
+        return "avengers/review/write";
+    }
+
+    @PostMapping("/write")
+    public String reviewInsert(ReviewDTO reviewDTO){
+        reviewService.reviewInsert(reviewDTO);
+        return "avengers/review/list";
+    }
+
     @GetMapping("/{reviewNo}")
     public String reviewDetail(@PathVariable Long reviewNo, Model model){
         ReviewDTO reviewDTO= reviewService.reviewDetail(reviewNo);
         model.addAttribute("review", reviewDTO);
         return "avengers/review/detail";
+    }
+
+    @GetMapping("/{reviewNo}/update")
+    public String updateReviewForm(@PathVariable Long reviewNo, Model model){
+        ReviewDTO reviewDTO= reviewService.updateReviewForm(reviewNo);
+        model.addAttribute("review", reviewDTO);
+        return "avengers/review/update";
+    }
+
+    @PostMapping("/{reviewNo}/update")
+    public String reviewUpdate(@PathVariable Long reviewNo, ReviewDTO reviewDTO){
+        reviewService.reviewUpdate(reviewNo, reviewDTO);
+        return "redirect:/review/" + reviewNo;
+    }
+
+    @PostMapping("/{reviewNo}/delete")
+    public String reviewDelete(@PathVariable Long reviewNo){
+        reviewService.reviewDelete(reviewNo);
+        return "redirect:/review/list";
     }
 }
