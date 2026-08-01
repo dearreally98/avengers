@@ -30,4 +30,14 @@ public class ReviewDTO {
                 review.getReviewName(), review.getReviewContent(), null,
                 review.getReviewCreateAt(), review.getReviewHit());
     }
+
+    public void update(String reviewName, String reviewTitle, String reviewContent, String reviewPassword){
+        this.reviewName= reviewName;
+        this.reviewTitle= reviewTitle;
+        this.reviewContent= reviewContent;
+
+        if(reviewPassword != null && !reviewPassword.isBlank()){
+            this.reviewPassword= reviewPassword;
+        }
+    }
 }

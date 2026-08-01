@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>어벤저스 영화 리뷰 등록 페이지</title>
+</head>
+<body>
+    <th:section layout:fragment="content">
+        <div class="bg-dark text-light p-3 d-flex justify-content-between align-items-center mt-1">
+            <h3>리뷰 게시판</h3>
+        </div>
+
+        <form id="insertForm" th:action="@{/review/write}" th:object="${review}" method="post">
+            <div class="container-fluid mt-3">
+               <input type="text" class="form-control" id="inputName" th:field="*{reviewName}" placeholder="작성자명을 입력하세요">
+               <div class="invalid-feedback">
+                   작성자명을 입력해 주세요.
+               </div>
+                <input type="text" class="form-control mt-2" id="inputTitle" th:field="*{reviewTitle}" placeholder="제목을 입력하세요">
+                <div class="invalid-feedback">
+                    제목을 입력해 주세요.
+                </div>
+                <input type="password" class="form-control mt-2" id="inputPassword" th:field="*{reviewPassword}" placeholder="비밀번호를 입력하세요">
+                <textarea class="form-control mt-4" id="inputContent" rows="10" th:field="*{reviewContent}" placeholder="내용을 입력해 주세요."></textarea>
+                <div class="invalid-feedback">
+                    내용이 입력되지 않았습니다.
+                </div>
+
+                <div class="card-footer d-flex justify-content-end mt-2">
+                    <button type="submit" id="insertBtn" class="btn btn-outline-success">등록</button>
+                    <button type="reset" id="cancelBtn" class="btn btn-outline-warning ms-2">입력취소</button>
+                    <a class="btn btn-outline-secondary ms-2" th:href="@{/review/list}">목록</a>
+                </div>
+            </div>
+        </form>
+    </th:section>
+</body>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/avengers/common.js}" defer></script>
+    <script th:src="@{/js/avengers/review/write.js}" defer></script>
+</th:block>
+</html>
