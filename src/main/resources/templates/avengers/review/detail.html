@@ -13,58 +13,54 @@
             <h3>리뷰 게시판</h3>
         </div>
 
-        <div class="card text-bg-light border-dark mt-5" th:object="${review}">
-            <input type="hidden" name="reviewNo" th:value="*{reviewNo}">
+        <form id="formData" th:object="${review}">
+            <input type="hidden" id="reviewNo" name="reviewNo" th:value="*{reviewNo}">
 
-            <div class="card-body">
-                <div class="mb-3 row">
-                    <label for="reviewTitle" class="col-sm-2 col-form-label">제목 :</label>
-                    <div class="col-sm-10">
-                        <input type="text" readonly class="form-control-plaintext" id="reviewTitle" th:value="*{reviewTitle}">
+            <div class="card text-bg-light border-dark mt-5">
+                <div class="card-body">
+                    <div class="mb-3 row">
+                        <label for="reviewTitle" class="col-sm-2 col-form-label">제목 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="reviewTitle" th:value="*{reviewTitle}">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="reviewName" class="col-sm-2 col-form-label">작성자 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="reviewName" th:value="*{reviewName}">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">작성일 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control-plaintext"
+                                   th:value="${#temporals.format(review.reviewCreateAt, 'yyyy/MM/dd')}"
+                                   readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">조회수 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control-plaintext"
+                                   th:value="*{reviewHit}" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reviewContent" class="form-label"></label>
+                        <textarea class="form-control" id="reviewContent" rows="10" readonly th:text="*{reviewContent}"></textarea>
                     </div>
                 </div>
-
-                <div class="mb-3 row">
-                    <label for="reviewName" class="col-sm-2 col-form-label">작성자 :</label>
-                    <div class="col-sm-10">
-                        <input type="text" readonly class="form-control-plaintext" id="reviewName" th:value="*{reviewName}">
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">작성일 :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control-plaintext"
-                               th:value="${#temporals.format(review.reviewCreateAt, 'yyyy/MM/dd')}"
-                               readonly>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">조회수 :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control-plaintext"
-                               th:value="*{reviewHit}" readonly>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="reviewContent" class="form-label"></label>
-                    <textarea class="form-control" id="reviewContent" rows="10" readonly th:text="*{reviewContent}"></textarea>
+                <div class="card-footer d-flex justify-content-end">
+                    <button type="button" id="updateBtn" class="btn btn-outline-success">수정</button>
+                    <button type="button" id="deleteBtn" class="btn btn-outline-danger ms-2">삭제</button>
+                    <a class="btn btn-outline-secondary ms-2" th:href="@{/review/list}">목록</a>
                 </div>
             </div>
-
-            <div class="card-footer d-flex justify-content-end">
-                <button class="btn btn-outline-success">수정</button>
-                <button class="btn btn-outline-danger ms-2">삭제</button>
-                <a class="btn btn-outline-secondary ms-2" th:href="@{/review/list}">목록</a>
-            </div>
-
-        </div>
-
+        </form>
     </th:section>
 
     <th:block layout:fragment="script">
+        <script th:src="@{/js/avengers/common.js}" defer></script>
         <script th:src="@{/js/avengers/review/detail.js}" defer></script>
     </th:block>
 </body>

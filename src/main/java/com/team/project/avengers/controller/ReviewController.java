@@ -34,7 +34,7 @@ public class ReviewController {
     @PostMapping("/write")
     public String reviewInsert(ReviewDTO reviewDTO){
         reviewService.reviewInsert(reviewDTO);
-        return "avengers/review/list";
+        return "redirect:/review/list";
     }
 
     @GetMapping("/{reviewNo}")

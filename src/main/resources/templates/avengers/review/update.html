@@ -8,4 +8,14 @@
     <title>어벤저스 영화 리뷰 수정 페이지</title>
 </head>
 <body>
+    <th:section layout:fragment="content">
+        <div class="bg-dark text-light p-3 d-flex justify-content-between align-items-center mt-1">
+            <h3>리뷰 게시판</h3>
+        </div>
+    </th:section>
+
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/avengers/common.js}" defer></script>
+    </th:block>
+
 </body>
