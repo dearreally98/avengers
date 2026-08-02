@@ -10,5 +10,6 @@ public interface ReviewService {
     ReviewDTO reviewDetail(Long reviewNo);
     ReviewDTO updateReviewForm(Long reviewNo);
     void reviewUpdate(Long reviewNo, ReviewDTO reviewDTO);
+    boolean passwordCheck(Long reviewNo, String reviewPassword);
     void reviewDelete(Long reviewNo);
 }

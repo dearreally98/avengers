@@ -50,10 +50,25 @@
                         <textarea class="form-control" id="reviewContent" rows="10" readonly th:text="*{reviewContent}"></textarea>
                     </div>
                 </div>
-                <div class="card-footer d-flex justify-content-end">
-                    <button type="button" id="updateBtn" class="btn btn-outline-success">수정</button>
-                    <button type="button" id="deleteBtn" class="btn btn-outline-danger ms-2">삭제</button>
-                    <a class="btn btn-outline-secondary ms-2" th:href="@{/review/list}">목록</a>
+                <div class="card-footer mt-3 d-flex justify-content-between align-items-center">
+                    <div id="passwordBox" class="invisible w-25">
+                        <div class="input-group">
+                            <span class="input-group-text">비밀번호</span>
+                            <input type="password" class="form-control" id="reviewPassword">
+                            <button type="button" id="passwordCheckBtn" class="btn btn-primry">
+                                확인
+                            </button>
+                            <button type="button" id="passwordCancelBtn" class="btn btn-secondary ms-2">
+                                입력취소
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <button type="button" id="updateBtn" class="btn btn-outline-success">수정</button>
+                        <button type="button" id="deleteBtn" class="btn btn-outline-danger ms-2">삭제</button>
+                        <a class="btn btn-outline-secondary ms-2" th:href="@{/review/list}">목록</a>
+                    </div>
                 </div>
             </div>
         </form>
@@ -64,3 +79,4 @@
         <script th:src="@{/js/avengers/review/detail.js}" defer></script>
     </th:block>
 </body>
+</html>

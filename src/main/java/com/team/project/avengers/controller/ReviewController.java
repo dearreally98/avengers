@@ -5,10 +5,7 @@ import com.team.project.avengers.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,6 +52,15 @@ public class ReviewController {
     public String reviewUpdate(@PathVariable Long reviewNo, ReviewDTO reviewDTO){
         reviewService.reviewUpdate(reviewNo, reviewDTO);
         return "redirect:/review/" + reviewNo;
+    }
+
+    @PostMapping("/{reviewNo}/password-check")
+    @ResponseBody
+    public boolean passwordCheck(
+            @PathVariable Long reviewNo,
+            @RequestParam String reviewPassword){
+
+        return reviewService.passwordCheck(reviewNo, reviewPassword);
     }
 
     @PostMapping("/{reviewNo}/delete")

@@ -61,6 +61,15 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    public boolean passwordCheck(Long reviewNo, String reviewPassword) {
+        Review review= reviewRepository.findById(reviewNo)
+                .orElseThrow();
+
+        return review.getReviewPassword() != null
+                && review.getReviewPassword().equals(reviewPassword);
+    }
+
+    @Override
     @Transactional
     public void reviewDelete(Long reviewNo) {
         Review review= getReview(reviewNo);
