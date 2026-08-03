@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <title layout:fragment="title">추천 영화 목록</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+<body>
+    <section layout:fragment="content" class="my-4">
+        <h1 class="title">영화 추천 목록</h1>
+        <form id="searchForm" th:action="@{/avengers/recommendlist}" method="get">
+            <input type="hidden" name="page" id="page" th:value="${pageResponse.pageRequestDTO.page}">
+            <input type="hidden" name="size" id="size" th:value="${pageResponse.pageRequestDTO.size}">
+
+            <div class="field has-addons mb-4">
+                <div class="control">
+                    <div class="select">
+                        <select name="searchType" id="searchType">
+                            <option value="" th:selected="${#strings.isEmpty(pageResponse.pageRequestDTO.searchType)}">
+                                검색 조건
+                            </option>
+                            <option value="movieName" th:selected="${pageResponse.pageRequestDTO.searchType == 'movieName'}">
+                                영화 제목
+                            </option>
+                            <option value="movieCast" th:selected="${pageResponse.pageRequestDTO.searchType == 'movieCast'}">
+                                감독
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control is-expanded">
+                    <input type="text" name="keyword" id="keyword" class="input"
+                           placeholder="검색어 입력"
+                           th:value="${pageResponse.pageRequestDTO.keyword}">
+                </div>
+
+                <div class="control">
+                    <button type="submit" id="searchBtn" class="button is-link">
+                        검색
+                    </button>
+                    <a th:href="@{/avengers/recommendlist}" id="allSearchBtn" class="button is-link is-outlined" style="text-decoration: none">
+                        전체목록
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        <!-- 💡 row-cols-lg-5 : 큰 화면(PC)에서는 한 줄에 딱 5개씩 배치 -->
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 mb-4">
+
+            <!-- DB의 dtoList 수만큼 카드 반복 생성 -->
+            <div class="col" th:each="movie : ${pageResponse.dtoList}">
+
+                <!-- 카드 전체에 상세 페이지 링크 걸기 -->
+                <a th:href="@{/avengers/recommendDetail/{movieNo}(movieNo=${movie.movieNo}, page=${pageResponse.pageRequestDTO.page}, searchType=${pageResponse.pageRequestDTO.searchType}, keyword=${pageResponse.pageRequestDTO.keyword})}"
+                            class="text-decoration-none text-dark"
+                            style="text-decoration: none !important;">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+
+                        <!-- 1. 포스터 이미지 (동적 적용) -->
+                        <img th:src="${movie.saveFilename != null && !#strings.isEmpty(movie.saveFilename)}
+                             ? @{/upload/{file}(file=${movie.saveFilename})}
+                             : '/image/어벤져스.jpg'"
+                             class="card-img-top"
+                             th:alt="${movie.movieName}"
+                             style="height: 260px; object-fit: cover;">
+
+                        <!-- 2. 하단 제목 영역 -->
+                        <div class="card-body p-2 text-center bg-white">
+                            <!-- 제목이 길면 ... 처리 -->
+                            <p class="card-text fw-bold text-truncate mb-0"
+                               th:text="${movie.movieName}"
+                               style="font-size: 0.95rem;">
+                                영화 제목
+                            </p>
+                            <p class="card-text fw-bold text-truncate mb-0"
+                               th:text="${movie.releaseDate}"
+                               style="font-size: 0.95rem;">
+                                개봉일
+                            </p>
+                            <p class="card-text fw-bold text-truncate mb-0"
+                               th:text="${movie.movieCast}"
+                               style="font-size: 0.95rem;">
+                                감독
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example" role="navigation" class="pagination justify-content-center"
+                    th:if="${pageResponse.totalCount > 0}">
+
+            <!-- 이전 페이지 블록 -->
+            <a href="#" class="pagination-previous page-link" th:if="${pageResponse.prev}"
+               th:data-page="${pageResponse.prevPage}">이전</a>
+
+            <span th:unless="${pageResponse.prev}" class="pagination-previous is-disabled">
+                이전
+            </span>
+
+
+
+            <!-- 페이지 번호 -->
+            <ul class="pagination-list">
+                <li th:each="pageNumber : ${pageResponse.pageNumberList}">
+                    <a href="#" class="pagination-link page-link"
+                       th:data-page="${pageNumber}"
+                       th:text="${pageNumber}"
+                       th:classappend="${pageNumber == pageResponse.currentPage} ? 'is-current'"
+                       th:attr="aria-current=${pageNumber == pageResponse.currentPage} ? 'page', aria-label=|Goto page ${pageNumber}|"
+                    ></a>
+                </li>
+            </ul>
+
+
+
+            <!-- 다음 페이지 블록 -->
+            <a href="#" class="pagination-next page-link" th:if="${pageResponse.next}"
+               th:data-page="${pageResponse.nextPage}">다음</a>
+
+            <span th:unless="${pageResponse.next}" class="pagination-previous is-disabled">
+                다음
+            </span>
+
+        </nav>
+    </section>
+
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/avengers/recommendlist.js}" defer></script>
+    </th:block>
+</body>
+</html>
