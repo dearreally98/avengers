@@ -18,6 +18,12 @@ public class RecommendMovieController {
 
     private final RecommendMovieService recommendMovieService;
 
+    //매인쪽 매핑
+    @GetMapping("/main")
+    public String main() {
+        return "avengers/main";
+    }
+
     // 1. 추천 영화 목록 조회 (templates/avengers/recommendList.html)
     @GetMapping("/recommendlist")
     public String movieList(PageRequestDTO pageRequestDTO, Model model) {
