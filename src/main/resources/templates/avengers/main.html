@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>기본</title>
+    <title>어벤져스 기본페이지</title>
 </head>
 <body>
-    <h1>어벤져스</h1>
+   <div layout:fragment="content" class="container my-4">
+        <h1>어벤져스</h1>
 
-    <img src="/static/image/어벤져스.jpg">
+        <img th:src="@{/image/어벤져스.jpg}" alt="어벤져스 포스터" style="max-width: 100%;">
 
-    <a th:href="#">
-    <strong>어벤져스 정보 바로가기</strong>
-    </a>
+        <div class="mt-3">
+           <a th:href="@{#}">
+               <strong>어벤져스 정보 바로가기</strong>
+           </a>
+        </div>
+   </div>
 </body>
 </html>
