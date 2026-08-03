@@ -6,6 +6,8 @@ import com.team.project.avengers.repository.ReviewRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,12 @@ public class ReviewServiceImpl implements ReviewService{
                 .stream()
                 .map(ReviewDTO::fromEntity)
                 .toList();
+    }
+
+    @Override
+    public Page<ReviewDTO> reviewList(Pageable pageable) {
+        return reviewRepository.findAll(pageable)
+                .map(ReviewDTO::fromEntity);
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.team.project.avengers.controller;
 import com.team.project.avengers.dto.ReviewDTO;
 import com.team.project.avengers.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/list")
-    public String list(Model model){
-        List<ReviewDTO> reviewList =  reviewService.reviewList();
+    public String list(Pageable pageable, Model model){
+        Page<ReviewDTO> reviewList =  reviewService.reviewList(pageable);
         model.addAttribute("reviewList", reviewList);
         return "avengers/review/list";
     }

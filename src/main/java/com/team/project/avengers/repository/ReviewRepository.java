@@ -13,17 +13,13 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findAllByOrderByReviewNoDesc();
 
-    @Query("""
+    /*@Query("""
         SELECT r
         FROM Review r
         WHERE (:searchType= 'reviewTitle' AND r.reviewTitle LIKE CONCAT ('%',:keyword,'%'))
            OR (:searchType= 'reviewName' AND r.reviewName LIKE CONCAT ('%',:keyword,'%'))
            OR (:searchType= 'reviewContent' AND r.reviewContent LIKE CONCAT ('%',:keyword,'%'))
-        """)
-    Page<Review> searchReview(
-            @Param("searchType") String searchType,
-            @Param("keyword") String keyword,
-            Pageable pageable
-    );
+        """)*/
 
+    Page<Review> findAll(Pageable pageable);
 }
