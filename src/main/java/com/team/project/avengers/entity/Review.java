@@ -31,18 +31,25 @@ public class Review {
     @Column(length= 12)
     private String reviewPassword;
 
+    @Column(length = 255)
+    private String reviewFileName;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDate reviewCreateAt;
 
     private int reviewHit = 0;
 
-    public Review(String reviewTitle, String reviewName, String reviewContent, String reviewPassword){
+    public Review(String reviewTitle, String reviewName, String reviewContent,
+                  String reviewPassword, String reviewFileName){
         this.reviewTitle= reviewTitle;
         this.reviewName= reviewName;
         this.reviewContent= reviewContent;
         this.reviewPassword= reviewPassword;
+        this.reviewFileName= reviewFileName;
     }
+
+
 
     public void reviewUpdate(String reviewTitle, String reviewContent){
         this.reviewTitle= reviewTitle;

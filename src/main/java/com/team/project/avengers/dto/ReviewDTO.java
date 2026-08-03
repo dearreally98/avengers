@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -18,17 +19,21 @@ public class ReviewDTO {
     private String reviewName;
     private String reviewContent;
     private String reviewPassword;
+    private MultipartFile reviewFile;
+    private String reviewFileName;
     private LocalDate reviewCreateAt;
     private int reviewHit;
 
     public Review toEntity(){
-        return new Review(reviewTitle, reviewName, reviewContent, reviewPassword);
+        return new Review(reviewTitle, reviewName, reviewContent,
+                          reviewPassword, reviewFileName);
     }
 
     public static ReviewDTO fromEntity(Review review){
         return new ReviewDTO(review.getReviewNo(), review.getReviewTitle(),
                 review.getReviewName(), review.getReviewContent(), null,
-                review.getReviewCreateAt(), review.getReviewHit());
+                null, review.getReviewFileName(), review.getReviewCreateAt(),
+                review.getReviewHit());
     }
 
     public void update(String reviewName, String reviewTitle, String reviewContent, String reviewPassword){

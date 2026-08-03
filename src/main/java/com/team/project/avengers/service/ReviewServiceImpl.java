@@ -32,6 +32,13 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    public Page<ReviewDTO> searchReview(String searchType, String keyword, Pageable pageable) {
+        return reviewRepository
+                .searchReview(searchType, keyword, pageable)
+                .map(ReviewDTO::fromEntity);
+    }
+
+    @Override
     @Transactional
     public void reviewInsert(ReviewDTO reviewDTO) {
         Review review= reviewDTO.toEntity();

@@ -10,6 +10,7 @@ import java.util.List;
 public interface ReviewService {
     List<ReviewDTO> reviewList();
     Page<ReviewDTO> reviewList(Pageable pageable);
+    Page<ReviewDTO> searchReview(String searchType, String keyword, Pageable pageable);
     void reviewInsert(ReviewDTO reviewDTO);
     ReviewDTO reviewDetail(Long reviewNo);
     ReviewDTO updateReviewForm(Long reviewNo);

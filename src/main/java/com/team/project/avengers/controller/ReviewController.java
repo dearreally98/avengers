@@ -3,8 +3,12 @@ package com.team.project.avengers.controller;
 import com.team.project.avengers.dto.ReviewDTO;
 import com.team.project.avengers.service.ReviewService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +22,29 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/list")
-    public String list(Pageable pageable, Model model){
-        Page<ReviewDTO> reviewList =  reviewService.reviewList(pageable);
+    public String list(
+            @RequestParam(required = false) String searchType,
+            @RequestParam(required = false) String keyword,
+            @PageableDefault(
+                    size = 10,
+                    sort = "reviewNo",
+                    direction = Sort.Direction.DESC
+            )
+            Pageable pageable,
+            Model model){
+
+        Page<ReviewDTO> reviewList;
+
+        if(keyword == null || keyword.isBlank()){
+            reviewList = reviewService.reviewList(pageable);
+        } else {
+            reviewList = reviewService.searchReview(searchType, keyword, pageable);
+        }
+
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("keyword", keyword);
+
         return "avengers/review/list";
     }
 

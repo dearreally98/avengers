@@ -9,6 +9,7 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ReviewRepositoryTests {
     }
 
     //게시물 등록 테스트
-    @Test
+    /*@Test
     @Commit
     public void reviewInsertTest(){
         Review review1= new Review(
@@ -58,5 +59,23 @@ public class ReviewRepositoryTests {
         );
         Review saveReview3= reviewRepository.save(review3);
         print(saveReview3);
-    }
+    }*/
+
+    // 테스트를 위한 게시글 늘리기
+    /*@Test
+    @Commit
+    public void reviewListInsertTest(){
+
+        for(int i=1; i<=100; i++){
+            Review review = new Review(
+                    "올 해가 지나기 전 반드시 봐야할 영화" + i,
+                    "감동ㅠㅠ" + i,
+                    "진짜 님들 꼭 보세요! 두 번 보세요! 세 번 보세요! 백 번 보세요!!ㅠㅠ" + i,
+                    "1234"
+            );
+
+            reviewRepository.save(review);
+        }
+    }*/
+
 }

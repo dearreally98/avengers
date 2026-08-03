@@ -13,7 +13,9 @@
             <h3>리뷰 게시판</h3>
         </div>
 
-        <form id="insertForm" th:action="@{/review/write}" th:object="${review}" method="post">
+        <form id="insertForm" th:action="@{/review/write}"
+                              th:object="${review}" method="post"
+                              enctype="multipart/form-data">
             <div class="container-fluid mt-3">
                <input type="text" class="form-control" id="inputName" th:field="*{reviewName}" placeholder="작성자명을 입력하세요">
                <div class="invalid-feedback">
@@ -29,7 +31,15 @@
                     내용이 입력되지 않았습니다.
                 </div>
 
-                <div class="card-footer d-flex justify-content-end mt-2">
+                <div class="mt-3">
+                    <label for="reviewFile" class="form-label">
+                        이미지 첨부
+                    </label>
+
+                    <input type="file" class="form-control w-25" id="reviewFile" th:field="*{reviewFile}">
+                </div>
+
+                <div class="card-footer d-flex justify-content-end mt-3">
                     <button type="submit" id="insertBtn" class="btn btn-outline-success">등록</button>
                     <button type="reset" id="cancelBtn" class="btn btn-outline-warning ms-2">입력취소</button>
                     <a class="btn btn-outline-secondary ms-2" th:href="@{/review/list}">목록</a>
