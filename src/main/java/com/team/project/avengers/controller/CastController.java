@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/cast")
+@RequestMapping("/avengers/cast")
 public class CastController {
 
     private final CastService castService;

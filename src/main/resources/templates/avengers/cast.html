@@ -3,7 +3,8 @@
         lang="ko"
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout/layout}">
+        layout:decorate="~{layout/layout}"
+>
 <head>
     <title layout:fragment="title">출연진 및 제작진</title>
 
@@ -13,100 +14,105 @@
 </head>
 
 <body>
-<th:block layout:fragment="content">
-    <div class="cast-container">
-        <header class="cast-header">
-            <h1>출연진 및 제작진</h1>
-            <p>어벤저스의 주요 출연진과 제작진을 확인할 수 있습니다.</p>
-        </header>
+<section layout:fragment="content" class="my-4">
+    <h1 class="title">출연진 및 제작진</h1>
 
-        <!-- 검색 영역 -->
-        <section class="cast-search-area">
-            <form
-                    class="cast-search-form"
-                    th:action="@{/cast}"
-                    method="get"
-                    role="search"
-            >
+    <!-- 검색 영역 -->
+    <form th:action="@{/avengers/cast}" method="get" role="search">
+        <div class="field has-addons mb-4">
+            <div class="control is-expanded">
                 <input
-                        class="cast-search-input"
                         type="search"
                         name="keyword"
+                        class="input"
                         th:value="${keyword}"
                         placeholder="인물 이름, 배역 또는 담당 업무 검색"
                         aria-label="출연진 및 제작진 검색"
                 />
+            </div>
 
-                <button class="cast-search-button" type="submit">
+            <div class="control">
+                <button type="submit" class="button is-link">
                     검색
                 </button>
 
                 <a
-                        class="cast-reset-button"
-                        th:href="@{/cast}"
+                        th:href="@{/avengers/cast}"
+                        class="button is-link is-outlined"
                         th:if="${keyword != null and !keyword.isBlank()}"
                 >
-                    초기화
+                    전체목록
                 </a>
-            </form>
-        </section>
-
-        <!-- 검색 결과 없음 -->
-        <section
-                class="empty-result"
-                th:if="${#lists.isEmpty(actorList) and #lists.isEmpty(crewList)}"
-        >
-            <p
-                    th:if="${keyword != null and !keyword.isBlank()}"
-                    th:text="|‘${keyword}’에 대한 검색 결과가 없습니다.|"
-            >
-                검색 결과가 없습니다.
-            </p>
-
-            <p th:unless="${keyword != null and !keyword.isBlank()}">
-                등록된 출연진 및 제작진이 없습니다.
-            </p>
-        </section>
-
-        <!-- 출연진 영역 -->
-        <section
-                class="cast-section"
-                th:if="${!#lists.isEmpty(actorList)}"
-        >
-            <div class="cast-section-title">
-                <h2>출연진</h2>
-                <span
-                        class="cast-count"
-                        th:text="|총 ${actorList.size()}명|"
-                >
-              총 0명
-            </span>
             </div>
+        </div>
+    </form>
 
-            <div class="cast-list">
+    <!-- 검색 결과 없음 -->
+    <div
+            class="alert alert-light border text-center py-5 my-4"
+            th:if="${#lists.isEmpty(actorList) and #lists.isEmpty(crewList)}"
+    >
+        <p
+                class="mb-0"
+                th:if="${keyword != null and !keyword.isBlank()}"
+                th:text="|‘${keyword}’에 대한 검색 결과가 없습니다.|"
+        >
+            검색 결과가 없습니다.
+        </p>
+
+        <p
+                class="mb-0"
+                th:unless="${keyword != null and !keyword.isBlank()}"
+        >
+            등록된 출연진 및 제작진이 없습니다.
+        </p>
+    </div>
+
+    <!-- 출연진 영역 -->
+    <section
+            class="mb-5"
+            th:if="${!#lists.isEmpty(actorList)}"
+    >
+        <div
+                class="d-flex align-items-center justify-content-between mb-3"
+        >
+            <h2 class="title is-4 mb-0">주연</h2>
+
+            <span
+                    class="text-secondary"
+                    th:text="|${actorList.size()}명|"
+            >
+            0명
+          </span>
+        </div>
+
+        <div
+                class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 mb-4"
+        >
+            <div
+                    class="col"
+                    th:each="actor : ${actorList}"
+            >
                 <article
-                        class="cast-card"
-                        th:each="actor : ${actorList}"
+                        class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden"
                         th:id="|cast-${actor.castId}|"
                 >
-                    <div class="cast-image-area">
-                        <img
-                                class="cast-image"
-                                th:src="${actor.imagePath}"
-                                th:alt="|${actor.castName} 사진|"
-                        />
-                    </div>
+                    <img
+                            th:src="${actor.imagePath}"
+                            class="card-img-top cast-person-image"
+                            th:alt="|${actor.castName} 사진|"
+                    />
 
-                    <div class="cast-info">
+                    <div class="card-body p-2 text-center bg-white">
                         <h3
-                                class="cast-name"
+                                class="card-text fw-bold text-truncate mb-1 cast-person-name"
                                 th:text="${actor.castName}"
                         >
                             배우 이름
                         </h3>
 
                         <p
-                                class="cast-role"
+                                class="card-text text-secondary small mb-0 cast-person-role"
                                 th:text="${actor.roleName}"
                         >
                             배역
@@ -114,47 +120,54 @@
                     </div>
                 </article>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 제작진 영역 -->
-        <section
-                class="cast-section"
-                th:if="${!#lists.isEmpty(crewList)}"
+    <!-- 제작진 영역 -->
+    <section
+            class="mb-5"
+            th:if="${!#lists.isEmpty(crewList)}"
+    >
+        <div
+                class="d-flex align-items-center justify-content-between mb-3"
         >
-            <div class="cast-section-title">
-                <h2>제작진</h2>
-                <span
-                        class="cast-count"
-                        th:text="|총 ${crewList.size()}명|"
-                >
-              총 0명
-            </span>
-            </div>
+            <h2 class="title is-4 mb-0">제작진</h2>
 
-            <div class="cast-list">
+            <span
+                    class="text-secondary"
+                    th:text="|${crewList.size()}명|"
+            >
+            0명
+          </span>
+        </div>
+
+        <div
+                class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 mb-4"
+        >
+            <div
+                    class="col"
+                    th:each="crew : ${crewList}"
+            >
                 <article
-                        class="cast-card"
-                        th:each="crew : ${crewList}"
+                        class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden"
                         th:id="|cast-${crew.castId}|"
                 >
-                    <div class="cast-image-area">
-                        <img
-                                class="cast-image"
-                                th:src="${crew.imagePath}"
-                                th:alt="|${crew.castName} 사진|"
-                        />
-                    </div>
+                    <img
+                            th:src="${crew.imagePath}"
+                            class="card-img-top cast-person-image"
+                            th:alt="|${crew.castName} 사진|"
+                    />
 
-                    <div class="cast-info">
+                    <div class="card-body p-2 text-center bg-white">
                         <h3
-                                class="cast-name"
+                                class="card-text fw-bold text-truncate mb-1 cast-person-name"
                                 th:text="${crew.castName}"
                         >
                             제작진 이름
                         </h3>
 
                         <p
-                                class="cast-role"
+                                class="card-text text-secondary small mb-0 cast-person-role"
                                 th:text="${crew.roleName}"
                         >
                             담당 업무
@@ -162,8 +175,8 @@
                     </div>
                 </article>
             </div>
-        </section>
-    </div>
-</th:block>
+        </div>
+    </section>
+</section>
 </body>
 </html>
