@@ -45,7 +45,11 @@
             </table>
         </div>
 
-        <div class="is-flex is-justify-content-flex-end mt-4">
+        <div class="d-flex justify-content-between mt-4">
+            <div class="input-group w-50">
+                <input type="text" class="form-control" placeholder="검색어를 입력해 주세요.">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+            </div>
             <a th:href="@{/review/write}" class="btn btn-outline-secondary">
                 리뷰 작성
             </a>

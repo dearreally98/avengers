@@ -33,7 +33,7 @@ passwordCheckBtn.addEventListener("click", () => {
                 if (processType === "update"){
                     locationProcess(`/review/${no}/update`);
                 } else if (processType === "delete"){
-                    if (!confirm("게시글을 삭제하시겠습니까?")){
+                    if (confirm("게시글을 삭제하시겠습니까?")){
                         formSubmit("formData", "post", `/review/${no}/delete`);
                     }
                 }
@@ -43,3 +43,9 @@ passwordCheckBtn.addEventListener("click", () => {
             }
         });
     });
+
+passwordCancelBtn.addEventListener("click", () => {
+    passwordBox.classList.add("invisible");
+    reviewPassword.value= "";
+    processType= "";
+})
