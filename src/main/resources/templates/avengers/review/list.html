@@ -46,9 +46,17 @@
         </div>
 
         <div class="d-flex justify-content-between mt-4">
-            <div class="input-group w-50">
-                <input type="text" class="form-control" placeholder="검색어를 입력해 주세요.">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+            <div class="d-flex gap-1 ms-3 w-50">
+                <select class="form-select w-auto">
+                    <option selected>선택</option>
+                    <option value="1">제목</option>
+                    <option value="2">닉네임</option>
+                    <option value="3">내용</option>
+                </select>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="검색어를 입력해 주세요.">
+                    <button class="btn btn-outline-secondary" type="button" id="resultBtn">검색</button>
+                </div>
             </div>
             <a th:href="@{/review/write}" class="btn btn-outline-secondary">
                 리뷰 작성
