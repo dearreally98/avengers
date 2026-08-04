@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>어벤져스 기본페이지</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+    <!-- 💡 본문 컨텐츠 영역 -->
+    <div layout:fragment="content" class="movie-page">
+        <div class="movie-container">
+
+            <!-- 포스터 영역 -->
+            <div class="movie-poster-wrapper">
+                <img th:src="@{/image/어벤져스.jpg}" alt="어벤져스 포스터" class="movie-poster">
+            </div>
+
+            <!-- 영화 상세 정보 영역 -->
+            <div class="movie-details">
+                <h1 class="movie-title">어벤져스</h1>
+
+                <p class="movie-description">
+                    최강의 슈퍼히어로들이 모였다!<br>
+                    지구의 운명을 건 거대한 전쟁이 시작된다.
+                </p>
+
+                <div class="link-area">
+                    <a th:href="@{#}" class="movie-info-link">
+                        어벤져스 정보 바로가기
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
