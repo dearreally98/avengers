@@ -8,4 +8,8 @@ public interface MemorableService {
     List<MemorableLinesDTO> memorableLinesList();
 
     void MemorableLinesInsert(MemorableLinesDTO memorableLinesDTO);
+
+    void MemorableDelete(Long no);
+
+//    void MemorableUpdate()
 }

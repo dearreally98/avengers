@@ -15,7 +15,7 @@
         <div class="container my-4 mx-auto text-center" style="max-width: 800px;">
             <h3>기억에 남는 명대사, 무엇인가요?</h3>
 
-            <form th:action="@{/avengers/memorableLinesList}" method="post" class="mb-3">
+            <form th:action="@{/avengers/memorableList}" method="post" class="mb-3">
                 <div class="card border shadow-sm">
                     <div class="card-body p-0 d-flex">
                         <div class="flex-grow-1">
@@ -25,7 +25,7 @@
                         <button type="submit" class="btn btn-purple btn-sm px-3 fw-bold rounded-end-2 rounded-start-0" style="white-space: nowrap;">등록</button>
                     </div>
                     <div class="border-bottom">
-                        <select name="characterNameDTO" class="form-select form-select-sm border-0 py-2 px-3 fw-bold text-dark" style="background-color: #f8f9fa;" required>
+                        <select name="characterActorNameDTO" class="form-select form-select-sm border-0 py-2 px-3 fw-bold text-dark" style="background-color: #f8f9fa;" required>
                             <option value="" selected disabled>-- 캐릭터 / 배우를 선택하세요 --</option>
                             <option value="토니 스타크 / 아이언맨 (로버트 다우니 주니어)">토니 스타크 / 아이언맨 (로버트 다우니 주니어)</option>
                             <option value="스티브 로저스 / 캡틴 아메리카 (크리스 에반스)">스티브 로저스 / 캡틴 아메리카 (크리스 에반스)</option>
@@ -42,14 +42,25 @@
 
             <!-- 2. 카드 리스트 영역 -->
             <div class="d-flex flex-column gap-3">
-                <div th:each="memorable : ${memorableLinesList}" th:object="${memorable}" class="card border shadow-sm rounded-4 bg-white overflow-hidden">
+                <div th:each="memorable : ${memorableList}" th:object="${memorable}" class="card border shadow-sm rounded-4 bg-white overflow-hidden">
                     <div class="card-body p-4 position-relative">
-                        <div class="position-absolute end-0 top-0 text-secondary opacity-25 pe-3 pt-2" style="font-size: 2.5rem; pointer-events: none;">
-                            <i class="bi bi-quote"></i>
+                        <div class="position-absolute end-0 top-0 pe-3 pt-3 d-flex gap-1">
+                            <!-- 수정 버튼 -->
+                            <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center border-0 p-0" style="width: 32px; height: 32px; opacity: 0.7; transition: all 0.2s;" onmouseover="this.style.opacity='1'; this.style.backgroundColor='#f1f3f5';" onmouseout="this.style.opacity='0.7'; this.style.backgroundColor='transparent';" title="수정">
+                                <i class="bi bi-pencil-fill" style="font-size: 0.85rem;">수정</i>
+                            </a>
+
+                            <!-- 삭제 버튼 -->
+                            <form th:action="@{/avengers/memorableDelete}" method="post" >
+                                <input type="hidden" name="no" th:value="*{noDTO}">
+                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle d-flex align-items-center justify-content-center border-0 p-0" style="width: 32px; height: 32px; opacity: 0.7; transition: all 0.2s;" onmouseover="this.style.opacity='1'; this.style.backgroundColor='#ffe3e3';" onmouseout="this.style.opacity='0.7'; this.style.backgroundColor='transparent';" onclick="return confirm('정말 삭제하시겠습니까?');" title="삭제">
+                                    삭제
+                                </button>
+                            </form>
+
                         </div>
                         <div class="mb-3 text-start">
-                            <strong class="fs-6" style="color: #6b4776;" th:text="*{characterNameDTO}">캐릭터 이름</strong>
-                            <p th:text="*{actorNameDTO}">배우 이름</p>
+                            <strong class="fs-6" style="color: #6b4776;" th:text="*{characterActorNameDTO}">캐릭터 이름</strong>
                         </div>
                         <div class="text-center my-3 py-2">
                             <div class="fw-bold text-dark fs-5 mb-1">
@@ -65,7 +76,6 @@
                                 <span th:text="*{goodDTO}">0</span>
                             </button>
                             <div class="text-muted" style="font-size: 0.75rem;">
-                                <span th:text="*{nicknameDTO}">작성자</span>
                                 <span class="mx-1">·</span>
                                 <span th:text="${#temporals.format(memorable.createTimeDTO, 'yyyy-MM-dd')}">작성일</span>
                             </div>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -17,23 +18,23 @@ import java.util.List;
 public class MemorableLinesController {
     private final MemorableService memorableService;
 
-    @GetMapping("/memorableLinesList")
+    @GetMapping("/memorableList")
     public String memorableLinesList(Model model) {
-        List<MemorableLinesDTO> memorableLinesList = memorableService.memorableLinesList();
-        model.addAttribute("memorableLinesList", memorableLinesList);
-        return "/memorableLines/list";
+        List<MemorableLinesDTO> memorableList = memorableService.memorableLinesList();
+        model.addAttribute("memorableList", memorableList);
+        return "/avengers/memorableList";
     }
 
-    @PostMapping("/memorableLinesList")
+    @PostMapping("/memorableList")
     public String memorableLinesInsert(MemorableLinesDTO memorableLinesDTO) {
-        System.out.println("characterNameDTO = " + memorableLinesDTO.getCharacterNameDTO());
-        System.out.println("actorNameDTO = " + memorableLinesDTO.getActorNameDTO());
-        System.out.println("contentDTO = " + memorableLinesDTO.getContentDTO());
-        System.out.println("nicknameDTO = " + memorableLinesDTO.getNicknameDTO());
-        System.out.println("passwordDTO = " + memorableLinesDTO.getPasswordDTO());
-        System.out.println("titleDTO = " + memorableLinesDTO.getTitleDTO());
         memorableService.MemorableLinesInsert(memorableLinesDTO);
 
-        return "redirect:/avengers/memorableLineslist";
+        return "redirect:/avengers/memorableList";
+    }
+
+    @PostMapping("/memorableDelete")
+    public String memorableDelete(@RequestParam Long no) {
+        memorableService.MemorableDelete(no);
+        return "redirect:/avengers/memorableList";
     }
 }

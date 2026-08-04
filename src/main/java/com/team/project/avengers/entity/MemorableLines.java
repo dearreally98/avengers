@@ -19,13 +19,7 @@ public class MemorableLines {
     private Long memoNo; // 아이디 번호
 
     @Column(nullable = false)
-    private String actorName; // 배우 이름
-
-    @Column(length = 30, nullable = false)
-    private String nickname; // 닉네임
-
-    @Column(nullable = false)
-    private String characterName;
+    private String characterActorName;
 
     @Column(nullable = false)
     private String title; // 제목
@@ -36,20 +30,14 @@ public class MemorableLines {
 
     private int good = 0; // 추천수
 
-    @Column(length = 100, nullable = false)
-    private String password; // 비밀번호
-
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createTime; // 작성일
 
-    public MemorableLines(String nickname, String characterName, String actorName, String title, String content, String password) { // 생성자
-        this.nickname = nickname;
-        this.characterName = characterName;
-        this.actorName = actorName;
+    public MemorableLines(String characterActorName, String title, String content) { // 생성자
+        this.characterActorName = characterActorName;
         this.title = title;
         this.content = content;
-        this.password = password;
     }
 
     public void update(String title, String content) { // 제목과 내용을 수정
