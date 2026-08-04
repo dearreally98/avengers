@@ -2,6 +2,7 @@ package com.team.project.avengers.controller;
 
 import com.team.project.avengers.dto.MemorableLinesDTO;
 import com.team.project.avengers.service.MemorableService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +26,17 @@ public class MemorableLinesController {
         return "/avengers/memorableList";
     }
 
+    @GetMapping("/memorableSearch")
+    public String memorableSearch(@RequestParam String keyword, Model model) {
+        List<MemorableLinesDTO> memorableList = memorableService.searchMemorableList(keyword);
+        model.addAttribute("memorableList", memorableList);
+
+        return "/avengers/memorableList";
+    }
+
     @PostMapping("/memorableList")
     public String memorableLinesInsert(MemorableLinesDTO memorableLinesDTO) {
+
         memorableService.MemorableLinesInsert(memorableLinesDTO);
 
         return "redirect:/avengers/memorableList";
@@ -35,6 +45,12 @@ public class MemorableLinesController {
     @PostMapping("/memorableDelete")
     public String memorableDelete(@RequestParam Long no) {
         memorableService.MemorableDelete(no);
+        return "redirect:/avengers/memorableList";
+    }
+
+    @PostMapping("/memorableUpdate")
+    public String memorableUpdate(@RequestParam Long no, MemorableLinesDTO memorableLinesDTO) {
+        memorableService.MemorableUpdate(no, memorableLinesDTO);
         return "redirect:/avengers/memorableList";
     }
 }

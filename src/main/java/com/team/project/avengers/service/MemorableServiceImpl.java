@@ -23,6 +23,12 @@ public class MemorableServiceImpl implements MemorableService {
     }
 
     @Override
+    public List<MemorableLinesDTO> searchMemorableList(String keyword) {
+        List<MemorableLines> memorableList = memorableLinesRepository.findByTitleContainingOrCharacterActorNameContainingOrderByMemoNoDesc(keyword, keyword);
+        return memorableList.stream().map(MemorableLinesDTO::fromEntity).toList();
+    }
+
+    @Override
     public void MemorableLinesInsert(MemorableLinesDTO memorableLinesDTO) {
         MemorableLines memorableLines = memorableLinesDTO.toEntity();
         memorableLinesRepository.save(memorableLines);
@@ -33,4 +39,14 @@ public class MemorableServiceImpl implements MemorableService {
     public void MemorableDelete(Long no) {
         memorableLinesRepository.deleteById(no);
     }
+
+    @Override
+    @Transactional
+    public void MemorableUpdate(Long no, MemorableLinesDTO memorableLinesDTO) {
+        MemorableLines memorableLines = memorableLinesRepository.findById(no).orElseThrow(() -> new IllegalArgumentException("해당 데이터가 존재하지 않습니다."));
+
+        memorableLines.update(memorableLinesDTO.getTitleDTO(), memorableLinesDTO.getContentDTO(), memorableLinesDTO.getCharacterActorNameDTO());
+    }
+
+
 }

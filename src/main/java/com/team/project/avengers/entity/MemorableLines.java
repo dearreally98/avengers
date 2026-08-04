@@ -40,9 +40,10 @@ public class MemorableLines {
         this.content = content;
     }
 
-    public void update(String title, String content) { // 제목과 내용을 수정
+    public void update(String title, String content, String characterActorName) { // 제목과 내용을 수정
         this.title = title;
         this.content = content;
+        this.characterActorName = characterActorName;
     }
 
     public void increaseGood() { // 추천수 증가
