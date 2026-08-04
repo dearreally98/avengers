@@ -4,6 +4,8 @@ import com.team.project.avengers.dto.MemorableLinesDTO;
 import com.team.project.avengers.entity.MemorableLines;
 import com.team.project.avengers.repository.MemorableLinesRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +18,10 @@ public class MemorableServiceImpl implements MemorableService {
     private final MemorableLinesRepository memorableLinesRepository;
 
     @Override
-    public List<MemorableLinesDTO> memorableLinesList() {
-        List<MemorableLines> memorableLinesList = memorableLinesRepository.findAll(Sort.by(Sort.Direction.DESC, "memoNo"));
+    public Page<MemorableLinesDTO> memorableList(Pageable pageable) {
+        Page<MemorableLines> memorablePages = memorableLinesRepository.findAll(pageable);
 
-        return memorableLinesList.stream().map(memorableLines -> MemorableLinesDTO.fromEntity(memorableLines)).toList();
+        return memorablePages.map(memorableLines -> MemorableLinesDTO.fromEntity(memorableLines));
     }
 
     @Override
