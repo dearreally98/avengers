@@ -6,6 +6,8 @@ import com.team.project.avengers.entity.ReviewComment;
 import com.team.project.avengers.repository.ReviewCommentRepository;
 import com.team.project.avengers.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +20,10 @@ public class ReviewCommentServiceImpl implements ReviewCommentService{
     private final ReviewRepository reviewRepository;
 
     @Override
-    public List<ReviewCommentDTO> reviewCommentList(Long reviewNo) {
+    public Page<ReviewCommentDTO> reviewCommentList(Long reviewNo, Pageable pageable) {
         return reviewCommentRepository
-                .findByReview_ReviewNoOrderByIdDesc(reviewNo)
-                .stream()
-                .map(ReviewCommentDTO::fromEntity)
-                .toList();
+                .findByReviewReviewNo(reviewNo, pageable)
+                .map(ReviewCommentDTO::fromEntity);
     }
 
     @Override
@@ -36,5 +36,23 @@ public class ReviewCommentServiceImpl implements ReviewCommentService{
         ReviewComment savedComment = reviewCommentRepository.save(reviewComment);
 
         return ReviewCommentDTO.fromEntity(savedComment);
+    }
+
+    @Override
+    @Transactional
+    public ReviewCommentDTO commentUpdate(Long id, ReviewCommentDTO commentDTO) {
+        ReviewComment comment = reviewCommentRepository.findById(id)
+                .orElseThrow();
+
+        comment.update(
+                commentDTO.getNickname(),
+                commentDTO.getCommentBody()
+        );
+        return ReviewCommentDTO.fromEntity(comment);
+    }
+
+    @Override
+    public void commentDelete(Long commentNo) {
+        reviewCommentRepository.deleteById(commentNo);
     }
 }

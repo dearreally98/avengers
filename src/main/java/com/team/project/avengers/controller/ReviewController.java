@@ -7,13 +7,9 @@ import com.team.project.avengers.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/review")
@@ -25,24 +21,18 @@ public class ReviewController {
     public String list(
             @RequestParam(required = false) String searchType,
             @RequestParam(required = false) String keyword,
-            @PageableDefault(
-                    size = 10,
-                    sort = "reviewNo",
-                    direction = Sort.Direction.DESC
-            )
-            Pageable pageable,
+            PageRequestDTO pageRequestDTO,
             Model model){
 
         Page<ReviewDTO> reviewList;
+
+        Pageable pageable = pageRequestDTO.getPageable("reviewNo");
 
         if(keyword == null || keyword.isBlank()){
             reviewList = reviewService.reviewList(pageable);
         } else {
             reviewList = reviewService.searchReview(searchType, keyword, pageable);
         }
-
-        PageRequestDTO pageRequestDTO =
-                new PageRequestDTO(pageable.getPageNumber() + 1, pageable.getPageSize());
 
         PageResponseDTO<ReviewDTO> responseDTO =
                 new PageResponseDTO<>(

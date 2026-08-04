@@ -101,7 +101,7 @@ public class ReviewRepositoryTests {
     @Test
     @Commit
     public void commentAddTest(){
-        Review review = reviewRepository.findById(344L)
+        Review review = reviewRepository.findById(341L)
                 .orElseThrow();
 
         for(int i=1; i <= 15; i++){

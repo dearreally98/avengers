@@ -68,6 +68,10 @@
                     <button class="btn btn-outline-secondary" type="submit">
                         검색
                     </button>
+                    <a th:href="@{/review/list}"
+                       class="btn btn-outline-danger">
+                        검색 취소
+                    </a>
                 </div>
             </form>
             <a th:href="@{/review/write}" class="btn btn-outline-secondary">
@@ -82,7 +86,7 @@
                 <li class="page-item"
                     th:classappend="${!responseDTO.prev}?'disabled'">
                     <a class="page-link"
-                       th:href="@{/review/list(page=${responseDTO.prevPage - 1},
+                       th:href="@{/review/list(page=${responseDTO.prevPage},
                                                searchType=${searchType},
                                                keyword=${keyword})}">
                         &laquo; <!-- 특수문자를 HTML에서 표현하는 HTML 엔티티(<<라는 뜻) -->
@@ -105,7 +109,7 @@
                 <li class="page-item"
                     th:classappend="${!responseDTO.next} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/review/list(page=${responseDTO.nextPage - 1},
+                       th:href="@{/review/list(page=${responseDTO.nextPage},
                                                searchType=${searchType},
                                                keyword=${keyword})}">
                         &raquo;
