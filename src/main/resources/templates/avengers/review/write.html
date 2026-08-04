@@ -31,12 +31,12 @@
                     내용이 입력되지 않았습니다.
                 </div>
 
-                <div class="mt-3">
-                    <label for="reviewFile" class="form-label">
+                <div class="mt-3 d-flex align-items-center">
+                    <label for="reviewFile" class="form-label mb-0 me-3">
                         이미지 첨부
                     </label>
-
-                    <input type="file" class="form-control w-25" id="reviewFile" th:field="*{reviewFile}">
+                    <input type="file" class="form-control w-25" id="reviewFile" th:field="*{uploadFile}">
+                    <span id="fileName" class="ms-3"></span>
                 </div>
 
                 <div class="card-footer d-flex justify-content-end mt-3">

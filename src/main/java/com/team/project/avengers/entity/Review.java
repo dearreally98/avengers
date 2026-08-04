@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Audited;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -31,8 +30,8 @@ public class Review {
     @Column(length= 12)
     private String reviewPassword;
 
-    @Column(length = 255)
-    private String reviewFileName;
+    private String savedFileName;
+    private String originFileName;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -41,12 +40,11 @@ public class Review {
     private int reviewHit = 0;
 
     public Review(String reviewTitle, String reviewName, String reviewContent,
-                  String reviewPassword, String reviewFileName){
+                  String reviewPassword){
         this.reviewTitle= reviewTitle;
         this.reviewName= reviewName;
         this.reviewContent= reviewContent;
         this.reviewPassword= reviewPassword;
-        this.reviewFileName= reviewFileName;
     }
 
 
@@ -62,5 +60,15 @@ public class Review {
 
     public void addHit(){
         this.reviewHit++;
+    }
+
+    public void attackFile(String savedFileName, String originFileName){
+        this.savedFileName= savedFileName;
+        this.originFileName= originFileName;
+    }
+
+    public void removeFile(){
+        this.savedFileName= null;
+        this.originFileName= null;
     }
 }

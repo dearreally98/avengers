@@ -1,14 +1,14 @@
 package com.team.project.avengers.controller;
 
+import com.team.project.avengers.common.dto.PageRequestDTO;
+import com.team.project.avengers.common.dto.PageResponseDTO;
 import com.team.project.avengers.dto.ReviewDTO;
 import com.team.project.avengers.service.ReviewService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,18 @@ public class ReviewController {
             reviewList = reviewService.searchReview(searchType, keyword, pageable);
         }
 
+        PageRequestDTO pageRequestDTO =
+                new PageRequestDTO(pageable.getPageNumber() + 1, pageable.getPageSize());
+
+        PageResponseDTO<ReviewDTO> responseDTO =
+                new PageResponseDTO<>(
+                        reviewList.getContent(),
+                        pageRequestDTO,
+                        reviewList.getTotalElements()
+                );
+
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("responseDTO", responseDTO);
         model.addAttribute("searchType", searchType);
         model.addAttribute("keyword", keyword);
 

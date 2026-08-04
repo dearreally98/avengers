@@ -19,21 +19,30 @@ public class ReviewDTO {
     private String reviewName;
     private String reviewContent;
     private String reviewPassword;
-    private MultipartFile reviewFile;
-    private String reviewFileName;
+
+    private MultipartFile uploadFile;
+    private String savedFileName;
+    private String originFileName;
+
     private LocalDate reviewCreateAt;
     private int reviewHit;
 
     public Review toEntity(){
-        return new Review(reviewTitle, reviewName, reviewContent,
-                          reviewPassword, reviewFileName);
+        return new Review(reviewTitle, reviewName, reviewContent, reviewPassword);
     }
 
     public static ReviewDTO fromEntity(Review review){
-        return new ReviewDTO(review.getReviewNo(), review.getReviewTitle(),
-                review.getReviewName(), review.getReviewContent(), null,
-                null, review.getReviewFileName(), review.getReviewCreateAt(),
-                review.getReviewHit());
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setReviewNo(review.getReviewNo());
+        reviewDTO.setReviewTitle(review.getReviewTitle());
+        reviewDTO.setReviewName(review.getReviewName());
+        reviewDTO.setReviewContent(review.getReviewContent());
+        reviewDTO.setReviewCreateAt(review.getReviewCreateAt());
+        reviewDTO.setReviewHit(review.getReviewHit());
+        reviewDTO.setSavedFileName(review.getSavedFileName());
+        reviewDTO.setOriginFileName(review.getOriginFileName());
+
+        return reviewDTO;
     }
 
     public void update(String reviewName, String reviewTitle, String reviewContent, String reviewPassword){

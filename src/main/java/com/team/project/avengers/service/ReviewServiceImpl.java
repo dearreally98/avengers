@@ -1,5 +1,6 @@
 package com.team.project.avengers.service;
 
+import com.team.project.avengers.common.util.CustomFileUtil;
 import com.team.project.avengers.dto.ReviewDTO;
 import com.team.project.avengers.entity.Review;
 import com.team.project.avengers.repository.ReviewRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService{
     private final ReviewRepository reviewRepository;
+    private final CustomFileUtil customFileUtil;
 
     @Override
     public List<ReviewDTO> reviewList() {
@@ -42,8 +45,19 @@ public class ReviewServiceImpl implements ReviewService{
     @Transactional
     public void reviewInsert(ReviewDTO reviewDTO) {
         Review review= reviewDTO.toEntity();
+
+        MultipartFile uploadFile = reviewDTO.getUploadFile();
+
+        if(uploadFile != null && !uploadFile.isEmpty()){
+            String savedFileName= customFileUtil.saveFile(uploadFile);
+            String originFileName= uploadFile.getOriginalFilename();
+
+            review.attackFile(savedFileName, originFileName);
+        }
+
         reviewRepository.save(review);
     }
+
     private Review getReview(Long reviewNo){
         return reviewRepository.findById(reviewNo)
                 .orElseThrow(()->
@@ -72,6 +86,15 @@ public class ReviewServiceImpl implements ReviewService{
 
         if(reviewDTO.getReviewPassword() != null && !reviewDTO.getReviewPassword().isBlank()){
             review.passwordChange(reviewDTO.getReviewPassword());
+        }
+
+        MultipartFile uploadFile = reviewDTO.getUploadFile();
+        if(uploadFile != null && !uploadFile.isEmpty()){
+            String oldFileName = review.getSavedFileName();
+            String newSavedFileName = customFileUtil.saveFile(uploadFile);
+            customFileUtil.deleteFile(oldFileName);
+
+            review.attackFile(newSavedFileName, uploadFile.getOriginalFilename());
         }
     }
 

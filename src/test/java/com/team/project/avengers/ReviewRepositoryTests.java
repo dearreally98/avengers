@@ -1,6 +1,8 @@
 package com.team.project.avengers;
 
 import com.team.project.avengers.entity.Review;
+import com.team.project.avengers.entity.ReviewComment;
+import com.team.project.avengers.repository.ReviewCommentRepository;
 import com.team.project.avengers.repository.ReviewRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -8,10 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.test.annotation.Commit;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -30,7 +28,7 @@ public class ReviewRepositoryTests {
     }
 
     //게시물 등록 테스트
-    /*@Test
+    @Test
     @Commit
     public void reviewInsertTest(){
         Review review1= new Review(
@@ -59,14 +57,14 @@ public class ReviewRepositoryTests {
         );
         Review saveReview3= reviewRepository.save(review3);
         print(saveReview3);
-    }*/
+    }
 
     // 테스트를 위한 게시글 늘리기
-    /*@Test
+    @Test
     @Commit
     public void reviewListInsertTest(){
 
-        for(int i=1; i<=100; i++){
+        for(int i=1; i<=200; i++){
             Review review = new Review(
                     "올 해가 지나기 전 반드시 봐야할 영화" + i,
                     "감동ㅠㅠ" + i,
@@ -76,6 +74,43 @@ public class ReviewRepositoryTests {
 
             reviewRepository.save(review);
         }
-    }*/
+    }
 
+    // comment 관리
+    @Autowired
+    private ReviewCommentRepository commentRepository;
+
+    private void printComment(ReviewComment comment){
+        log.info("번호={}, 닉네임={}, 댓글={}, 등록날짜={}",
+                comment.getId(), comment.getNickname(), comment.getCommentBody(), comment.getCreatedDate());
+    }
+
+    @Test
+    @Commit
+    public void commentInsertTest(){
+        Review review = reviewRepository.findById(334L)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수가 없습니다."));
+
+        commentRepository.save(new ReviewComment(
+                "홍길동",
+                "좋은 리뷰입니다.",
+                review
+        ));
+    }
+
+    @Test
+    @Commit
+    public void commentAddTest(){
+        Review review = reviewRepository.findById(344L)
+                .orElseThrow();
+
+        for(int i=1; i <= 15; i++){
+            ReviewComment comment = new ReviewComment(
+                    "이영애" + i,
+                    "좋은 리뷰입니다!" + i,
+                    review
+            );
+            commentRepository.save(comment);
+        }
+    }
 }

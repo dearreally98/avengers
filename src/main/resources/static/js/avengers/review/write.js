@@ -3,6 +3,9 @@ const inputName= document.querySelector("#inputName");
 const inputTitle= document.querySelector("#inputTitle");
 const inputContent= document.querySelector("#inputContent");
 
+const fileInput = document.querySelector("#reviewFile");
+const fileName= document.querySelector("#fileName");
+
 insertForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -27,4 +30,19 @@ insertForm.addEventListener("submit", (event) => {
     if (check){
         insertForm.submit();
     }
+});
+
+fileInput.addEventListener("change", () => {
+    if(!chkFile(this)){
+        this.value= "";
+        fileName.textContent= "";
+        return;
+    }
+
+    fileName.textContent= this.files.length > 0 ? this.files[0].name : "";
+});
+
+fileInput.addEventListener("cancel", () => {
+    this.value= "";
+    fileName.textContent= "";
 });

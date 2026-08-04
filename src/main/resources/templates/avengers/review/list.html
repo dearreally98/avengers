@@ -80,9 +80,9 @@
 
                 <!-- 이전 페이지 이동 -->
                 <li class="page-item"
-                    th:classappend="${reviewList.first}?'disabled'">
+                    th:classappend="${!responseDTO.prev}?'disabled'">
                     <a class="page-link"
-                       th:href="@{/review/list(page=${reviewList.number-1},
+                       th:href="@{/review/list(page=${responseDTO.prevPage - 1},
                                                searchType=${searchType},
                                                keyword=${keyword})}">
                         &laquo; <!-- 특수문자를 HTML에서 표현하는 HTML 엔티티(<<라는 뜻) -->
@@ -91,21 +91,21 @@
 
                 <!-- 페이지 번호 -->
                 <li class="page-item"
-                    th:each="page : ${#numbers.sequence(0, reviewList.totalPages - 1)}"
-                    th:classappend="${page == reviewList.number} ? 'active'">
+                    th:each="page : ${responseDTO.pageNumberList}"
+                    th:classappend="${page == responseDTO.currentPage} ? 'active'">
                     <a class="page-link"
                        th:href="@{/review/list(page=${page},
                                                searchType=${searchType},
                                                keyword=${keyword})}"
-                       th:text="${page + 1}">
+                       th:text="${page}">
                     </a>
                 </li>
 
                 <!-- 다음 페이지 이동 -->
                 <li class="page-item"
-                    th:classappend="${reviewList.last} ? 'disabled'">
+                    th:classappend="${!responseDTO.next} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/review/list(page=${reviewList.number + 1},
+                       th:href="@{/review/list(page=${responseDTO.nextPage - 1},
                                                searchType=${searchType},
                                                keyword=${keyword})}">
                         &raquo;
