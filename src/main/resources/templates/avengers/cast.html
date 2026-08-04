@@ -9,7 +9,7 @@
     <title layout:fragment="title">출연진 및 제작진</title>
 
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/cast.css}" />
+        <link rel="stylesheet" th:href="@{/css/cast.css}"/>
     </th:block>
 </head>
 
@@ -98,7 +98,10 @@
                         th:id="|cast-${actor.castId}|"
                 >
                     <img
-                            th:src="${actor.imagePath}"
+                            th:src="${actor.imagePath != null and !#strings.isEmpty(actor.imagePath)
+    ? actor.imagePath
+    : '/image/cast/default-profile.jpg'}"
+                            onerror="this.onerror=null; this.src='/image/cast/default-profile.jpg';"
                             class="card-img-top cast-person-image"
                             th:alt="|${actor.castName} 사진|"
                     />
@@ -153,7 +156,10 @@
                         th:id="|cast-${crew.castId}|"
                 >
                     <img
-                            th:src="${crew.imagePath}"
+                            th:src="${crew.imagePath != null and !#strings.isEmpty(crew.imagePath)
+    ? crew.imagePath
+    : '/image/cast/default-profile.jpg'}"
+                            onerror="this.onerror=null; this.src='/image/cast/default-profile.jpg';"
                             class="card-img-top cast-person-image"
                             th:alt="|${crew.castName} 사진|"
                     />
