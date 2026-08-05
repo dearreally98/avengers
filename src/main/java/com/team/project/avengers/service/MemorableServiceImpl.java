@@ -50,5 +50,10 @@ public class MemorableServiceImpl implements MemorableService {
         memorableLines.update(memorableLinesDTO.getTitleDTO(), memorableLinesDTO.getContentDTO(), memorableLinesDTO.getCharacterActorNameDTO());
     }
 
-
+    @Override
+    public void MemorableGood(Long no) {
+        MemorableLines memorableLines = memorableLinesRepository.findById(no).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        memorableLines.increaseGood();
+        memorableLinesRepository.save(memorableLines);
+    }
 }

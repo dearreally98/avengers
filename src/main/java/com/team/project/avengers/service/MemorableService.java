@@ -17,5 +17,5 @@ public interface MemorableService {
 
     void MemorableUpdate(Long no, MemorableLinesDTO memorableLinesDTO);
 
-
+    void MemorableGood(Long no);
 }

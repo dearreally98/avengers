@@ -79,10 +79,12 @@
                                 <p class="text-secondary small mb-0" th:text="*{contentDTO}">부연설명</p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center pt-3 mt-2 border-top">
-                                <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1">
-                                    <i class="bi bi-hand-thumbs-up me-1"></i>
-                                    <span th:text="*{goodDTO}">0</span>
-                                </button>
+                                <form th:action="@{/avengers/memorable/{no}(no=*{noDTO})}" method="post">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill px-3 py-1">
+                                        <i class="bi bi-hand-thumbs-up me-1" th:text="*{goodDTO}"></i>
+                                    </button>
+                                </form>
+
                                 <div class="text-muted" style="font-size: 0.75rem;">
                                     <span class="mx-1">·</span>
                                     <span th:text="${#temporals.format(memorable.createTimeDTO, 'yyyy-MM-dd')}">작성일</span>
