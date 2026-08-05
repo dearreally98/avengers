@@ -47,7 +47,7 @@
 
             <!-- 2. 카드 리스트 영역 -->
             <div class="d-flex flex-column gap-3">
-                <div th:each="memorable : ${memorableList.content}" th:object="${memorable}" class="card border shadow-sm rounded-4 bg-white overflow-hidden">
+                <div th:each="memorable : ${memorableList}" th:object="${memorable}" class="card border shadow-sm rounded-4 bg-white overflow-hidden">
                     <div class="card-body p-4 position-relative">
 
                         <!-- 🔥 [일반 카드 영역] class="normal-card" 추가 -->

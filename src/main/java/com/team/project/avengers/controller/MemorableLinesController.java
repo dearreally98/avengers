@@ -5,6 +5,7 @@ import com.team.project.avengers.service.MemorableService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -29,10 +30,21 @@ public class MemorableLinesController {
     }
 
     @GetMapping("/memorableSearch")
-    public String memorableSearch(@RequestParam String keyword, Model model) {
+    public String memorableSearch(@RequestParam String keyword,
+                                  @RequestParam(defaultValue = "0") int page,
+                                  Model model) {
+        Pageable pageable = PageRequest.of(page, 5);
+        List<MemorableLinesDTO> searchList = memorableService.searchMemorableList(keyword);
 
-        List<MemorableLinesDTO> memorableList = memorableService.searchMemorableList(keyword);
+        // List를 HTML이 인식할 수 있는 Page 객체로 변환
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), searchList.size());
+        List<MemorableLinesDTO> subList = (start >= searchList.size()) ? List.of() : searchList.subList(start, end);
+
+        Page<MemorableLinesDTO> memorableList = new PageImpl<>(subList, pageable, searchList.isEmpty() ? 1 : searchList.size());
+
         model.addAttribute("memorableList", memorableList);
+        model.addAttribute("keyword", keyword);
 
         return "/avengers/memorableList";
     }
