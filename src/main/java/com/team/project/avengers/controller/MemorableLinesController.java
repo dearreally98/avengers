@@ -24,7 +24,7 @@ public class MemorableLinesController {
 
     @GetMapping("/memorableList")
     public String memorableList(@RequestParam(defaultValue = "0") int page, Model model) {
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 3);
         Page<MemorableLinesDTO> memorableList = memorableService.memorableList(pageable);
         model.addAttribute("memorableList", memorableList);
 

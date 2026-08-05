@@ -47,7 +47,7 @@
 
             <!-- 2. 카드 리스트 영역 -->
             <div class="d-flex flex-column gap-3">
-                <div th:each="memorable : ${memorableList}" th:object="${memorable}" class="card border shadow-sm rounded-4 bg-white overflow-hidden">
+                <div th:each="memorable : ${memorableList.content}" th:object="${memorable}" class="card border shadow-sm rounded-4 bg-white overflow-hidden">
                     <div class="card-body p-4 position-relative">
 
                         <!-- 🔥 [일반 카드 영역] class="normal-card" 추가 -->
@@ -90,6 +90,7 @@
                             </div>
                         </div> <!-- /.normal-card 끝 -->
 
+
                         <!-- 🔥 [수정 폼 영역] (edit-card) -->
                         <div class="edit-card" style="display: none;">
                             <form th:action="@{/avengers/memorableUpdate}" method="post">
@@ -124,6 +125,38 @@
                         </div> <!-- /.edit-card 끝 -->
                     </div>
                 </div>
+                <nav aria-label="Page navigation example" class="mt-4">
+                    <ul class="pagination justify-content-center">
+
+                        <!-- Previous -->
+                        <li class="page-item" th:classappend="${!memorableList.hasPrevious()} ? ' disabled'">
+                            <a class="page-link"
+                               th:href="@{/avengers/memorableList(page=${memorableList.number - 1})}">
+                                Previous
+                            </a>
+                        </li>
+
+                        <!-- 페이지 번호 -->
+                        <li class="page-item"
+                            th:each="i : ${#numbers.sequence(0, memorableList.totalPages - 1)}">
+
+                            <a class="page-link"
+                               th:href="@{/avengers/memorableList(page=${i})}"
+                               th:text="${i + 1}">
+                            </a>
+
+                        </li>
+
+                        <!-- Next -->
+                        <li class="page-item" th:classappend="${!memorableList.hasNext()} ? ' disabled'">
+                            <a class="page-link"
+                               th:href="@{/avengers/memorableList(page=${memorableList.number + 1})}">
+                                Next
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
             </div>
 
         </div>
