@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>어벤저스 영화 상세 페이지</title>
+</head>
+<body>
+    <th:section layout:fragment="content">
+        <div class="bg-dark text-light p-3 d-flex justify-content-between align-items-center mt-1">
+            <h3>리뷰 게시판</h3>
+        </div>
+
+        <form id="formData" th:object="${review}">
+            <input type="hidden" id="reviewNo" name="reviewNo" th:value="*{reviewNo}">
+
+            <div class="card text-bg-light border-dark mt-5">
+                <div class="card-body">
+                    <div class="mb-3 row">
+                        <label for="reviewTitle" class="col-sm-2 col-form-label">제목 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="reviewTitle" th:value="*{reviewTitle}">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="reviewName" class="col-sm-2 col-form-label">작성자 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="reviewName" th:value="*{reviewName}">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">작성일 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control-plaintext"
+                                   th:value="${#temporals.format(review.reviewCreateAt, 'yyyy/MM/dd')}"
+                                   readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">조회수 :</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control-plaintext"
+                                   th:value="*{reviewHit}" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="mb-3" th:if="${review.savedFileName != null}">
+                            <div>
+                                <img th:src="@{/upload/{fileName}(fileName=${review.savedFileName})}"
+                                     class="img-fluid"
+                                     style="max-width: 500px;">
+                            </div>
+                        </div>
+                        <label for="reviewContent" class="form-label"></label>
+                        <textarea class="form-control" id="reviewContent" rows="10" readonly th:text="*{reviewContent}"></textarea>
+                    </div>
+
+                    <!-- 댓글 창.. 추가.. -->
+                    <div class="comment-section mt-5">
+                        <h4 class="comment-title">
+                            댓글
+                            <span id="commentCount">(0)</span>
+                        </h4>
+
+                        <div class="comment-write">
+                            <input type="text"
+                                   id="commentName"
+                                   class="form-control">
+                            <textarea class="form-control mt-2"
+                                      id="commentContent"
+                                      rows="3"></textarea>
+                            <button type="button"
+                                    id="commentInsertBtn"
+                                    class="btn btn-primary mt-2">
+                                댓글 등록
+                            </button>
+                            <button type="button"
+                                    id="commentCancelBtn"
+                                    class="btn btn-primary mt-2">
+                                입력 취소
+                            </button>
+                        </div>
+                        <div id="commentList" class="mt-4">
+                        </div>
+                        <div id="commentPaging" class="mt-4 d-flex justify-content-center">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer mt-3 d-flex justify-content-between align-items-center">
+                    <div id="passwordBox" class="invisible w-25">
+                        <div class="input-group">
+                            <span class="input-group-text">비밀번호</span>
+                            <input type="password" class="form-control" id="reviewPassword">
+                            <button type="button" id="passwordCheckBtn" class="btn btn-primary">
+                                확인
+                            </button>
+                            <button type="button" id="passwordCancelBtn" class="btn btn-secondary ms-2">
+                                입력취소
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <button type="button" id="updateBtn" class="btn btn-outline-success">수정</button>
+                        <button type="button" id="deleteBtn" class="btn btn-outline-danger ms-2">삭제</button>
+                        <a class="btn btn-outline-secondary ms-2" th:href="@{/review/list}">목록</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </th:section>
+
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/avengers/common.js}" defer></script>
+        <script th:src="@{/js/avengers/review/detail.js}" defer></script>
+        <script th:src="@{/js/avengers/review/comment.js}" defer></script>
+    </th:block>
+</body>
+</html>

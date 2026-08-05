@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>어벤저스 영화 리뷰 조회 페이지</title>
+</head>
+<body>
+    <th:section layout:fragment="content">
+        <div class="bg-dark text-light p-3 d-flex justify-content-between align-items-center mt-1">
+            <h3>리뷰 게시판</h3>
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead class="table-secondary">
+                    <tr>
+                        <th scope="col">순번</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">닉네임</th>
+                        <th scope="col">작성일</th>
+                        <th scope="col">조회수</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider border-dark table-white table-hover table-striped">
+                    <tr th:if="${reviewList == null or reviewList.isEmpty()}">
+                        <td colspan="5" class="text-center">
+                            게시글이 존재하지 않습니다. 새로운 게시물을 올려보세요!
+                        </td>
+                    </tr>
+
+                    <tr th:each="review : ${reviewList.content}" th:object="${review}" th:data-no="*{reviewNo}">
+                        <td th:text="*{reviewNo}"></td>
+                        <td>
+                            <a class="text-decoration-none text-dark"
+                               th:href="@{/review/{reviewNo}(reviewNo=*{reviewNo})}" th:text="*{reviewTitle}"></a>
+                        </td>
+                        <td th:text="*{reviewName}"></td>
+                        <td th:text="${#temporals.format(review.reviewCreateAt, 'yyyy/MM/dd')}"></td>
+                        <td th:text="*{reviewHit}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <form th:action="@{/review/list}" method="get" id="searchForm"
+                  class="d-flex gap-1 ms-3 w-50">
+                <select class="form-select w-auto" name="searchType" id="searchType">
+                    <option value="" th:selected="${searchType == null or searchType == ''}">
+                        선택
+                    </option>
+                    <option value="title" th:selected="${searchType == 'title'}">
+                        제목
+                    </option>
+                    <option value="name" th:selected="${searchType == 'name'}">
+                        닉네임
+                    </option>
+                    <option value="content" th:selected="${searchType == 'content'}">
+                        내용
+                    </option>
+                </select>
+                <div class="input-group">
+                    <input id="keyword" name="keyword" th:value="${keyword}" type="text"
+                           class="form-control" placeholder="검색어를 입력해 주세요.">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        검색
+                    </button>
+                    <a th:href="@{/review/list}"
+                       class="btn btn-outline-danger">
+                        검색 취소
+                    </a>
+                </div>
+            </form>
+            <a th:href="@{/review/write}" class="btn btn-outline-secondary">
+                리뷰 작성
+            </a>
+        </div>
+
+        <nav class="mt-3">
+            <ul class="pagination justify-content-center">
+
+                <!-- 이전 페이지 이동 -->
+                <li class="page-item"
+                    th:classappend="${!responseDTO.prev}?'disabled'">
+                    <a class="page-link"
+                       th:href="@{/review/list(page=${responseDTO.prevPage},
+                                               searchType=${searchType},
+                                               keyword=${keyword})}">
+                        &laquo; <!-- 특수문자를 HTML에서 표현하는 HTML 엔티티(<<라는 뜻) -->
+                    </a>
+                </li>
+
+                <!-- 페이지 번호 -->
+                <li class="page-item"
+                    th:each="page : ${responseDTO.pageNumberList}"
+                    th:classappend="${page == responseDTO.currentPage} ? 'active'">
+                    <a class="page-link"
+                       th:href="@{/review/list(page=${page},
+                                               searchType=${searchType},
+                                               keyword=${keyword})}"
+                       th:text="${page}">
+                    </a>
+                </li>
+
+                <!-- 다음 페이지 이동 -->
+                <li class="page-item"
+                    th:classappend="${!responseDTO.next} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/review/list(page=${responseDTO.nextPage},
+                                               searchType=${searchType},
+                                               keyword=${keyword})}">
+                        &raquo;
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </th:section>
+
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/avengers/review/search.js}" defer></script>
+    </th:block>
+</body>
+</html>

@@ -1,0 +1,10 @@
+* common.css 추가할 것 *
+
+textarea.form-control{
+    resize: none;
+}
+
+textarea.form-control:focus{
+    box-shadow: none;
+    outline: none;
+}
