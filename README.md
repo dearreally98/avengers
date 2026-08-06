@@ -326,7 +326,7 @@ src
 │       │
 │       ├── templates
 │       │   ├── avengers
-│       │   │   ├── review
+│       │   │   ├── review.html
 │       │   │   ├── cast.html
 │       │   │   ├── main.html
 │       │   │   ├── memorableList.html
