@@ -31,13 +31,13 @@ Thymeleaf Layout을 이용해 Header와 Footer를 공통 레이아웃으로 구�
 - Spring Data JPA
 - Hibernate
 - Lombok
+- Thymeleaf
 
 ## Frontend
 
 - HTML5
 - CSS3
 - JavaScript
-- Thymeleaf
 - Bootstrap 5
 
 ## Database
